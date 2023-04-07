@@ -13,27 +13,22 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-//using ViewModel;
- 
-
-namespace View
+namespace Prezentacja.View
 {
     /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IDisposable
     {
         public MainWindow()
         {
             InitializeComponent();
         }
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+
+        public void Dispose()
         {
-            //ViewModel v = new ViewModel();
-        }
-        private void CreateSphereButton_Click(object sender, RoutedEventArgs e)
-        {
-            
+            if (this.DataContext is MainWindowViewModel viewModel)
+                viewModel.Dispose();
         }
     }
 }

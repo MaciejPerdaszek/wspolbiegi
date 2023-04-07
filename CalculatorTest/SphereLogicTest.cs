@@ -8,7 +8,7 @@ namespace AppTests
         [TestMethod]
         public void GetterTest()
         {
-           SphereLogic sphere = new SphereLogic();
+           LogicModel sphere = new LogicModel();
            sphere.createSpheres(4, 5);
            Assert.AreEqual(sphere.SphereList.Count, 4);
             for (int i = 0; i < sphere.SphereList.Count; i++)

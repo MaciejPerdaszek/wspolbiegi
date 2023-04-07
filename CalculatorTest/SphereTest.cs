@@ -5,7 +5,7 @@ namespace AppTests
     [TestClass]
     public class SphereTest
     {
-        Sphere sphere = new Sphere(4.3, 3.5, 5.5);
+        Ball sphere = new Ball(4.3, 3.5, 5.5);
         [TestMethod]
         public void GetterSetterTest()
         {
