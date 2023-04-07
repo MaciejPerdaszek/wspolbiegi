@@ -5,8 +5,8 @@ namespace AppTests
     [TestClass]
     public class BorderTest
     {
-        [TestMethod]    
-        public void GetterTest() 
+        [TestMethod]
+        public void GetterTest()
         {
             Border border = new Border(300, 400);
             Assert.AreEqual(border.Width, 300);
