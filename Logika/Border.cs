@@ -2,22 +2,22 @@
 {
     public class Border
     {
-        private int width;
-        private int height; 
+        private double width;
+        private double height; 
 
-        public Border(int width, int height)
+        public Border(double width, double height)
         {
             this.width = width;
             this.height = height;
         }   
 
-        public int Width { 
+        public double Width { 
             get { 
                 return width; 
             }
         }
 
-        public int Height {
+        public double Height {
             get {
                 return height;
             }

@@ -4,8 +4,8 @@ namespace Dane
 {
     public interface IBall : INotifyPropertyChanged, IDisposable
     {
-        double X { get; }
-        double Y { get; }
+        double X { get; set; }
+        double Y { get; set; }
     }
 
     public class BallChangedEventArgs : EventArgs
@@ -34,5 +34,11 @@ namespace Dane
         public abstract void Dispose();
 
         #endregion IDisposable
+
+        #region API
+
+        public abstract event EventHandler<BallChangedEventArgs>? BallChangedEvent;
+
+        #endregion API
     }
 }

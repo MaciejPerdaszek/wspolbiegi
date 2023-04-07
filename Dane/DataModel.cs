@@ -37,10 +37,9 @@ namespace Dane
                                                 ex => observer.OnError(ex),
                                                 () => observer.OnCompleted());
         }
-
         #region API
 
-        public event EventHandler<BallChangedEventArgs>? BallChangedEvent;
+        public override event EventHandler<BallChangedEventArgs>? BallChangedEvent;
 
         #endregion API
     }

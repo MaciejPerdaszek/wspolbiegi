@@ -18,17 +18,11 @@ namespace Prezentacja.View
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, IDisposable
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        public void Dispose()
-        {
-            if (this.DataContext is MainWindowViewModel viewModel)
-                viewModel.Dispose();
         }
     }
 }

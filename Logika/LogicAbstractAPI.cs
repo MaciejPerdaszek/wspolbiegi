@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Dane;
 
 namespace Logika
@@ -12,6 +13,8 @@ namespace Logika
         }
 
         public abstract void CreateBalls(int amount);
+
+        public abstract ObservableCollection<IBall>? Balls { get; }
 
         #region IDisposable
 

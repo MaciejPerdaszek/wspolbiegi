@@ -33,7 +33,7 @@ namespace Dane
             {
                 return x;
             }
-            internal set
+            set
             {
                 if (x == value)
                     return;
@@ -49,7 +49,7 @@ namespace Dane
             {
                 return y;
             }
-            internal set
+            public set
             {
                 if (y == value)
                     return;

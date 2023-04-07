@@ -14,10 +14,21 @@ namespace Logika
         #region public API
         public LogicModel() { 
             DataApi = DataAbstractAPI.CreateApi();
-            IDisposable observer = DataApi.Subscribe(x => Balls.Add(x));
+            Border border = new(20, 20);
+            IDisposable observer = DataApi.Subscribe(ball =>
+            {
+                Balls.Add(ball);
+
+                if (ball.X > border.Width) ball.X = border.Width;
+                else if (ball.X < 0) ball.X = 0;
+
+                if (ball.Y > border.Height) ball.Y = border.Height;
+                else if (ball.Y < 0) ball.Y = 0;
+            }
+            );
         }
 
-        public ObservableCollection<IBall> Balls { get; } = new ObservableCollection<IBall>();
+        public override ObservableCollection<IBall> Balls { get; } = new ObservableCollection<IBall>();
 
         public override void CreateBalls(int amount)
         {

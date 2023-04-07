@@ -15,8 +15,6 @@ namespace Prezentacja.View
     {
         protected override void OnDeactivated(EventArgs e)
         {
-            if(this.MainWindow is MainWindow window)
-                window.Dispose();
             base.OnDeactivated(e);
         }
     }

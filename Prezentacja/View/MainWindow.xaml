@@ -3,10 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Prezentacja.View"
+        xmlns:vm="clr-namespace:Prezentacja.ViewModel;assembly=Prezentacja.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Balls" Height="auto" Width="auto">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
-
+        <Rectangle
+            Height="400" 
+            Width="600"
+            Stroke="Black" 
+            StrokeThickness="2" 
+            Margin="10,18,190,66"
+            RenderTransformOrigin="0.517,0.506" 
+            x:Name="box"
+            DataContext="{Binding RelativeSource={RelativeSource Self}}"/>
+        <Button Name="CreateSphereButton" Content="Create spheres" Height="30" Width="100" Margin="0,0,90,441" RenderTransformOrigin="0.5,0.243" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+        <Button Name="StartButton" Content="Start" Height="30" Width="100" Margin="0,0,90,281" RenderTransformOrigin="0.508,2.704" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+        <TextBox Height="30" Width="100" Margin="0,0,90,406" TextChanged="TextBox_TextChanged" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>
