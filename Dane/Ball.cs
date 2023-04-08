@@ -49,7 +49,7 @@ namespace Dane
             {
                 return y;
             }
-            public set
+            set
             {
                 if (y == value)
                     return;
