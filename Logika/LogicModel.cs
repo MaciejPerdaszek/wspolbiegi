@@ -14,7 +14,7 @@ namespace Logika
         #region public API
         public LogicModel() { 
             DataApi = DataAbstractAPI.CreateApi();
-            Border border = new(20, 20);
+            Border border = new(600, 400);
             IDisposable observer = DataApi.Subscribe(ball =>
             {
                 Balls.Add(ball);
@@ -35,8 +35,8 @@ namespace Logika
             for (int i = 0; i < amount; i++)
             {
                 Random r = new();
-                double x = r.NextDouble() * 10;
-                double y = r.NextDouble() * 10;
+                double x = r.NextDouble() * 600;
+                double y = r.NextDouble() * 400;
                 DataApi.CreateBall(x, y);
             }
         }

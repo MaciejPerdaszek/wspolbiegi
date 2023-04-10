@@ -77,8 +77,8 @@ namespace Dane
         {
             if (state != null)
                 throw new ArgumentOutOfRangeException("state");
-            x += x + random.NextDouble() * 2 - 1;
-            y += y + random.NextDouble() * 2 - 1;
+            x += random.NextDouble() * 2 - 1;
+            y += random.NextDouble() * 2 - 1;
         }   
 
     }
