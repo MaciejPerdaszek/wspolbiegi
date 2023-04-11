@@ -10,9 +10,8 @@ namespace AppTests
         {
             int expectedAmount = 5;
             var logicApi = LogicAbstractAPI.CreateApi();
-            var logicModel = new LogicModel();
             logicApi.CreateBalls(expectedAmount);
-            //Assert.AreEqual(expectedAmount, logicModel.Balls.Count);
+            Assert.AreEqual(expectedAmount, logicApi.Balls.Count);
             logicApi.Dispose();
         }
     }

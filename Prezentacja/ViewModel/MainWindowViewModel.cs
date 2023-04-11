@@ -93,7 +93,7 @@ namespace Prezentacja.ViewModel
                 b.PropertyChanged += Ball_PropertyChanged;
             }
 
-            
+
         }
 
         private void Ball_PropertyChanged(object sender, PropertyChangedEventArgs e)
