@@ -15,7 +15,7 @@ namespace Prezentacja.Model
     }
     public abstract class ModelAbstractAPI : IDisposable
     {
-
+        public List<IViewBall> viewBallsList = new();
         public static ModelAbstractAPI CreateApi()
         {
             return new Model();

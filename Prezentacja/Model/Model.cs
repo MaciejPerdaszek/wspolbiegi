@@ -8,7 +8,7 @@ namespace Prezentacja.Model
     {
         private readonly LogicAbstractAPI LogicApi;
 
-        private List<IViewBall> _viewBallsList = new();
+       
 
         public Model()
         {
@@ -19,13 +19,13 @@ namespace Prezentacja.Model
         {
             foreach(ILogicBall logicBall in LogicApi.CreateBalls(amount, radius))
             {
-                _viewBallsList.Add(new ViewBall(logicBall));
+                viewBallsList.Add(new ViewBall(logicBall));
             }
         }
 
         public override List<IViewBall> GetViewBalls()
         {
-            return _viewBallsList;
+            return viewBallsList;
         }
 
         public override void Dispose()

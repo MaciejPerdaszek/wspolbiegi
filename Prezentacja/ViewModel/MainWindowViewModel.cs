@@ -60,7 +60,7 @@ namespace Prezentacja.ViewModel
             ModelApi.CreateTable(500, 300);
             ModelApi.CreateBalls(amountOfBalls, 5);
 
-            foreach (ViewBall b in ModelApi.GetViewBalls())
+            foreach (IViewBall b in ModelApi.GetViewBalls())
             {
                 var ellipse = new Ellipse
                 {
