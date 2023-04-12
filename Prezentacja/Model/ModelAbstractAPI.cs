@@ -1,10 +1,18 @@
 ﻿using Dane;
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Prezentacja.Model
 {
+
+    public interface IScreenBall : INotifyPropertyChanged, IDisposable
+    {
+        double X { get; set; }
+        double Y { get; set; }
+
+        double diameter { get; set; }
+    }
     public abstract class ModelAbstractAPI : IDisposable
     {
 
@@ -14,13 +22,11 @@ namespace Prezentacja.Model
         }
 
         public abstract void CreateBalls(int amount);
+        public abstract void CreateTable(int width, int height);
 
-        public abstract ObservableCollection<IBall> getBalls();
-
-        #region IDisposable
+        public abstract List<ScreenBall> GetScreenBalls();
 
         public abstract void Dispose();
 
-        #endregion IDisposable
     }
 }

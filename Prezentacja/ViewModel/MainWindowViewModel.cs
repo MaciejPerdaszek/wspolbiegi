@@ -6,54 +6,42 @@ using System.Windows.Input;
 using Prezentacja.Model;
 using Dane;
 using System.Windows.Controls;
+using System.Reactive;
+using System.Windows.Data;
+using System.Windows.Threading;
+using System.Windows.Shapes;
+using System.Windows;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Windows.Media.Animation;
+using System.Drawing;
+using System.Windows.Media.Media3D;
+using System.Diagnostics;
 
 namespace Prezentacja.ViewModel
 {
-    public class MainWindowViewModel : IDisposable, INotifyPropertyChanged
-    {
-        #region private
-
+    public class MainWindowViewModel : IDisposable
+    { 
         private ModelAbstractAPI ModelApi;
-        private ObservableCollection<IBall> Balls;
+
         private int amountOfBalls;
-
-        #endregion
-
-        #region INotifyPropertyChanged 
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion
-
-        #region Constructor
 
         public MainWindowViewModel()
         {
             ModelApi = ModelAbstractAPI.CreateApi();
             CreateBallsCommand = new Commands(CreateBallsOnBoard);
-            Balls = ModelApi.getBalls();
-            Balls.CollectionChanged += BallsCollectionChangedEvent;
         }
-
-        #endregion
-
-        #region IDispose
 
         public void Dispose()
         {
             ModelApi.Dispose();
         }
 
-        #endregion
-
-        #region Public Api
 
         public Canvas MyCanvas { get; } = new Canvas();
+
+        public double CanvasWidth { get; set; }
+        public double CanvasHeight { get; set; }
 
         public ICommand CreateBallsCommand { get; set; }
 
@@ -63,21 +51,18 @@ namespace Prezentacja.ViewModel
             set
             {
                 amountOfBalls = Convert.ToInt32(value);
-                OnPropertyChanged();
             }
         }
 
 
         private void CreateBallsOnBoard(object obj)
         {
+            ModelApi.CreateTable(500, 300);
             ModelApi.CreateBalls(amountOfBalls);
-        }
 
-        private void BallsCollectionChangedEvent(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            foreach (IBall b in Balls)
+            foreach (IScreenBall b in ModelApi.GetScreenBalls())
             {
-                var ellipse = new System.Windows.Shapes.Ellipse
+                var ellipse = new Ellipse
                 {
                     Width = 15,
                     Height = 15,
@@ -85,33 +70,20 @@ namespace Prezentacja.ViewModel
                     Stroke = System.Windows.Media.Brushes.Red,
                 };
 
-                MyCanvas.Children.Add(ellipse);
-                Canvas.SetLeft(ellipse, b.X);
-                Canvas.SetTop(ellipse, b.Y);
-
-                // Subscribe to ball property changed event
-                b.PropertyChanged += Ball_PropertyChanged;
-            }
-
-
-        }
-
-        private void Ball_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(Ball.X) || e.PropertyName == nameof(Ball.Y))
-            {
-                var ball = (Ball)sender;
-                foreach (System.Windows.Shapes.Ellipse ellipse in MyCanvas.Children)
+                Binding bindingX = new("X")
                 {
-                    if (Canvas.GetLeft(ellipse) == ball.X && Canvas.GetTop(ellipse) == ball.Y)
-                    {
-                        Canvas.SetLeft(ellipse, ball.X);
-                        Canvas.SetTop(ellipse, ball.Y);
-                    }
-                }
+                    Source = b
+                };
+                Binding bindingY = new("Y")
+                {
+                    Source = b
+                };
+                ellipse.SetBinding(Canvas.LeftProperty, bindingX);
+                ellipse.SetBinding(Canvas.TopProperty, bindingY);
+                MyCanvas.Children.Add(ellipse);
             }
-        }
 
-        #endregion
+        }
     }
 }
+

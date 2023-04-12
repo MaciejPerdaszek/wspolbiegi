@@ -1,55 +1,84 @@
 ﻿using Dane;
-using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Logika
 {
-    public class LogicModel : LogicAbstractAPI
+    internal class LogicModel : LogicAbstractAPI
     {
-        #region private
 
         private readonly DataAbstractAPI DataApi;
 
-        #endregion private
+        private int _width;
+        private int _height;
 
-        #region public API
+
+        public int width
+        {
+            get
+            {
+                return _width;
+            }
+            set
+            {
+                _width = value;
+            }
+        }
+        public int height
+        {
+            get
+            {
+                return _height;
+            }
+            set
+            {
+                _height = value;
+            }
+        }
         public LogicModel() { 
             DataApi = DataAbstractAPI.CreateApi();
-            Border border = new(600, 400);
-            IDisposable observer = DataApi.Subscribe(ball =>
-            {
-                Balls.Add(ball);
-
-                if (ball.X > border.Width) ball.X = border.Width;
-                else if (ball.X < 0) ball.X = 0;
-
-                if (ball.Y > border.Height) ball.Y = border.Height;
-                else if (ball.Y < 0) ball.Y = 0;
-            }
-            );
         }
-
-        public override ObservableCollection<IBall> Balls { get; } = new ObservableCollection<IBall>();
 
         public override void CreateBalls(int amount)
         {
-            for (int i = 0; i < amount; i++)
+            if(width != 0 && height != 0)
+                for (int i = 0; i < amount; i++)
+                {
+                    Random r = new();
+                    double x = r.NextDouble() * 600;
+                    double y = r.NextDouble() * 400;
+                    IBall ball = DataApi.CreateBall(x, y);
+                    ball.PropertyChanged += Ball_PropertyChanged;
+                }
+        }
+        public override List<IBall> GetBallsList()
+        {
+            return DataApi.GetBallsList();
+        }
+        private void Ball_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (sender != null)
             {
-                Random r = new();
-                double x = r.NextDouble() * 600;
-                double y = r.NextDouble() * 400;
-                DataApi.CreateBall(x, y);
+                    IBall ball = (IBall) sender;
+                    if (ball.X > width) ball.X = width;
+                    else if (ball.X < 0) ball.X = 0;
+
+                    if (ball.Y > height) ball.Y = height;
+                    else if (ball.Y < 0) ball.Y = 0;
             }
         }
 
-        #endregion public API
-
-        #region IDisposable
+        public override event PropertyChangedEventHandler? PropertyChanged;
 
         public override void Dispose()
         {
             DataApi.Dispose();
         }
 
-        #endregion
+        public override void CreateTable(int width, int height)
+        {
+            _width = width;
+            _height = height;
+        }
     }
 }

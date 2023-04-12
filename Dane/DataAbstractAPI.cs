@@ -8,37 +8,18 @@ namespace Dane
         double Y { get; set; }
     }
 
-    public class BallChangedEventArgs : EventArgs
-    {
-        public IBall? Ball { get; internal set; }
-    }
-
-    public abstract class DataAbstractAPI : IObservable<IBall>, IDisposable
+    public abstract class DataAbstractAPI : IDisposable
     {
         public static DataAbstractAPI CreateApi()
         {
             return new DataModel();   
         }
 
-        public abstract void CreateBall(double x, double y);
+        public abstract IBall CreateBall(double x, double y);
 
-
-        #region IObservable
-
-        public abstract IDisposable Subscribe(IObserver<IBall> observer);
-
-        #endregion IObservable
-
-        #region IDisposable
+        public abstract List<IBall> GetBallsList();
 
         public abstract void Dispose();
 
-        #endregion IDisposable
-
-        #region API
-
-        public abstract event EventHandler<BallChangedEventArgs>? BallChangedEvent;
-
-        #endregion API
     }
 }

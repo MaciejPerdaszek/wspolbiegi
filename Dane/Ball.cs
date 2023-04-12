@@ -1,45 +1,36 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace Dane
 {
-    public class Ball : IBall
+    public class Ball : IBall, INotifyPropertyChanged
     {
-        #region private
 
-        private double x;
-        private double y;
-        private Timer timer;
-        private Random random = new();
+        private double _x;
+        private double _y;
+        private Timer _timer;
+        private Random _random = new();
 
-        private void PropertyChangedEvent([CallerMemberName] string callerName = "")
+        public Ball(double x, double y)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
+            this._x = x;
+            this._y = y;
+            this._timer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
         }
 
-        #endregion private
-
-        public Ball(double x, double y) 
-        { 
-            this.x = x; 
-            this.y = y;
-            this.timer = new Timer(Move, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
-        }
-
-        #region IBall
         public double X
         {
             get
             {
-                return x;
+                return _x;
             }
             set
             {
-                if (x == value)
-                    return;
+                _x = value;
+                Debug.WriteLine("x:"+_x);
+                PropertyChangedEvent("X");
 
-                x = value;
-                PropertyChangedEvent();
             }
         }
 
@@ -47,39 +38,37 @@ namespace Dane
         {
             get
             {
-                return y;
+                return _y;
             }
             set
             {
-                if (y == value)
-                    return;
+                _y = value;
+                Debug.WriteLine("y:" + _y);
+                PropertyChangedEvent("Y");
 
-                y = value;
-                PropertyChangedEvent();
             }
         }
 
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        #endregion INotifyPropertyChanged
-        #endregion IBall
-
-        #region IDisposable
         public void Dispose()
         {
-            timer.Dispose();
+            _timer.Dispose();
         }
-        #endregion IDisposable
 
         public void Move(object? state)
         {
             if (state != null)
                 throw new ArgumentOutOfRangeException("state");
-            x += random.NextDouble() * 2 - 1;
-            y += random.NextDouble() * 2 - 1;
-        }   
+            X += _random.NextDouble() * 10 -5;
+            Y += _random.NextDouble() * 10 -5;
+        }
 
+
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void PropertyChangedEvent([CallerMemberName] string callerName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
+        }
     }
 }

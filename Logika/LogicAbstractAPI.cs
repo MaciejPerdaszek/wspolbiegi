@@ -1,12 +1,14 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Dane;
 
 namespace Logika
 {
 
-    public abstract class LogicAbstractAPI : IDisposable
+    public abstract class LogicAbstractAPI : INotifyPropertyChanged, IDisposable
     {
+
+        public abstract event PropertyChangedEventHandler? PropertyChanged;
+
         public static LogicAbstractAPI CreateApi()
         {
             return new LogicModel();   
@@ -14,12 +16,10 @@ namespace Logika
 
         public abstract void CreateBalls(int amount);
 
-        public abstract ObservableCollection<IBall>? Balls { get; }
-
-        #region IDisposable
+        public abstract void CreateTable(int width, int height);
+    
+        public abstract List<IBall> GetBallsList();
 
         public abstract void Dispose();
-
-        #endregion IDisposable
     }
 }

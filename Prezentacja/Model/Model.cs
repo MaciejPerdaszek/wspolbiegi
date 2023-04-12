@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Navigation;
+﻿using System.Collections.Generic;
 using Dane;
 using Logika;
 
@@ -12,13 +6,9 @@ namespace Prezentacja.Model
 {
     public class Model : ModelAbstractAPI
     {
-        #region private
-
         private readonly LogicAbstractAPI LogicApi;
 
-        #endregion private
-
-        #region public API
+        public List<ScreenBall> ScreenBalls = new();
 
         public Model()
         {
@@ -27,25 +17,32 @@ namespace Prezentacja.Model
 
         public override void CreateBalls(int amount)
         {
-            LogicApi.CreateBalls(amount);  
+            LogicApi.CreateBalls(amount);
+            foreach(IBall ball in LogicApi.GetBallsList())
+            {
+                CreateScreenBall(ball, 5);
+            }
         }
 
-        public override ObservableCollection<IBall> getBalls()
+        public override List<ScreenBall> GetScreenBalls()
         {
-            return LogicApi.Balls;
+            return ScreenBalls;
         }
-        #endregion public API
 
-        #region IDisposable
+        private void CreateScreenBall(IBall ball, double diameter)
+        {
+            ScreenBalls.Add(new ScreenBall(ball, 5));
+        }
 
         public override void Dispose()
         {
             LogicApi.Dispose();
         }
 
-
-
-        #endregion
+        public override void CreateTable(int width, int height)
+        {
+            LogicApi.CreateTable(width, height);
+        }
     }
 }
 

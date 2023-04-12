@@ -15,7 +15,7 @@
             <Button Content="Create balls" Command="{Binding CreateBallsCommand}" Margin="5"/>
         </StackPanel>
 
-        <Canvas Grid.Row="1" Width ="600" Height="400" Background="Green" Margin="10">
+        <Canvas Grid.Row="1" Width ="500" Height="300" Background="Green" Margin="10" DataContext="{Binding}">
             <ContentPresenter Content="{Binding MyCanvas}"/>
         </Canvas>
     </Grid>
@@ -23,4 +23,6 @@
     <Window.DataContext>
         <viewmodel:MainWindowViewModel/>
     </Window.DataContext>
+    
+
 </Window>
