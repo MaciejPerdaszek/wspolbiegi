@@ -3,22 +3,22 @@ using Dane;
 
 namespace Logika
 {
-
-    public abstract class LogicAbstractAPI : INotifyPropertyChanged, IDisposable
+    public interface ILogicBall : INotifyPropertyChanged, IDisposable
     {
-
-        public abstract event PropertyChangedEventHandler? PropertyChanged;
-
+        double X { get; set; }
+        double Y { get; set; }
+        double Diameter { get; set; }
+    }
+    public abstract class LogicAbstractAPI : IDisposable
+    {
         public static LogicAbstractAPI CreateApi()
         {
             return new LogicModel();   
         }
 
-        public abstract void CreateBalls(int amount);
+        public abstract List<ILogicBall> CreateBalls(int amount, int radius);
 
         public abstract void CreateTable(int width, int height);
-    
-        public abstract List<IBall> GetBallsList();
 
         public abstract void Dispose();
     }

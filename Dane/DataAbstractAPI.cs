@@ -8,7 +8,7 @@ namespace Dane
         double Y { get; set; }
     }
 
-    public abstract class DataAbstractAPI : IDisposable
+    public abstract class DataAbstractAPI
     {
         public static DataAbstractAPI CreateApi()
         {
@@ -16,10 +16,6 @@ namespace Dane
         }
 
         public abstract IBall CreateBall(double x, double y);
-
-        public abstract List<IBall> GetBallsList();
-
-        public abstract void Dispose();
 
     }
 }

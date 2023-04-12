@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Dane
 {
-    public class Ball : IBall, INotifyPropertyChanged
+    internal class Ball : IBall, INotifyPropertyChanged
     {
 
         private double _x;
@@ -28,8 +28,7 @@ namespace Dane
             set
             {
                 _x = value;
-                Debug.WriteLine("x:"+_x);
-                PropertyChangedEvent("X");
+                PropertyChangedEvent();
 
             }
         }
@@ -43,8 +42,7 @@ namespace Dane
             set
             {
                 _y = value;
-                Debug.WriteLine("y:" + _y);
-                PropertyChangedEvent("Y");
+                PropertyChangedEvent();
 
             }
         }

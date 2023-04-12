@@ -8,30 +8,24 @@ namespace Prezentacja.Model
     {
         private readonly LogicAbstractAPI LogicApi;
 
-        public List<ScreenBall> ScreenBalls = new();
+        private List<IViewBall> _viewBallsList = new();
 
         public Model()
         {
             LogicApi = LogicAbstractAPI.CreateApi();
         }
 
-        public override void CreateBalls(int amount)
+        public override void CreateBalls(int amount, int radius)
         {
-            LogicApi.CreateBalls(amount);
-            foreach(IBall ball in LogicApi.GetBallsList())
+            foreach(ILogicBall logicBall in LogicApi.CreateBalls(amount, radius))
             {
-                CreateScreenBall(ball, 5);
+                _viewBallsList.Add(new ViewBall(logicBall));
             }
         }
 
-        public override List<ScreenBall> GetScreenBalls()
+        public override List<IViewBall> GetViewBalls()
         {
-            return ScreenBalls;
-        }
-
-        private void CreateScreenBall(IBall ball, double diameter)
-        {
-            ScreenBalls.Add(new ScreenBall(ball, 5));
+            return _viewBallsList;
         }
 
         public override void Dispose()

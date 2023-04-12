@@ -1,6 +1,5 @@
 ﻿using Dane;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace Logika
 {
@@ -39,27 +38,12 @@ namespace Logika
             DataApi = DataAbstractAPI.CreateApi();
         }
 
-        public override void CreateBalls(int amount)
-        {
-            if(width != 0 && height != 0)
-                for (int i = 0; i < amount; i++)
-                {
-                    Random r = new();
-                    double x = r.NextDouble() * 600;
-                    double y = r.NextDouble() * 400;
-                    IBall ball = DataApi.CreateBall(x, y);
-                    ball.PropertyChanged += Ball_PropertyChanged;
-                }
-        }
-        public override List<IBall> GetBallsList()
-        {
-            return DataApi.GetBallsList();
-        }
+  
         private void Ball_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (sender != null)
             {
-                    IBall ball = (IBall) sender;
+                    LogicBall ball = (LogicBall) sender;
                     if (ball.X > width) ball.X = width;
                     else if (ball.X < 0) ball.X = 0;
 
@@ -67,18 +51,31 @@ namespace Logika
                     else if (ball.Y < 0) ball.Y = 0;
             }
         }
-
-        public override event PropertyChangedEventHandler? PropertyChanged;
-
-        public override void Dispose()
-        {
-            DataApi.Dispose();
-        }
-
         public override void CreateTable(int width, int height)
         {
             _width = width;
             _height = height;
+        }
+
+        public override List<ILogicBall> CreateBalls(int amount, int radius)
+        {
+            List<ILogicBall> list = new();
+            if (width != 0 && height != 0)
+                for (int i = 0; i < amount; i++)
+                {
+                    Random r = new();
+                    double x = r.NextDouble() * 600;
+                    double y = r.NextDouble() * 400;
+                    ILogicBall ball = new LogicBall(DataApi.CreateBall(x, y), radius);
+                    ball.PropertyChanged += Ball_PropertyChanged;
+                    list.Add(ball);
+                }
+            return list;
+        }
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

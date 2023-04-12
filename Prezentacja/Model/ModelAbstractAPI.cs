@@ -6,7 +6,7 @@ using System.ComponentModel;
 namespace Prezentacja.Model
 {
 
-    public interface IScreenBall : INotifyPropertyChanged, IDisposable
+    public interface IViewBall : INotifyPropertyChanged, IDisposable
     {
         double X { get; set; }
         double Y { get; set; }
@@ -21,10 +21,10 @@ namespace Prezentacja.Model
             return new Model();
         }
 
-        public abstract void CreateBalls(int amount);
+        public abstract void CreateBalls(int amount, int radius);
         public abstract void CreateTable(int width, int height);
 
-        public abstract List<ScreenBall> GetScreenBalls();
+        public abstract List<IViewBall> GetViewBalls();
 
         public abstract void Dispose();
 

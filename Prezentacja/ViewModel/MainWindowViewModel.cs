@@ -58,9 +58,9 @@ namespace Prezentacja.ViewModel
         private void CreateBallsOnBoard(object obj)
         {
             ModelApi.CreateTable(500, 300);
-            ModelApi.CreateBalls(amountOfBalls);
+            ModelApi.CreateBalls(amountOfBalls, 5);
 
-            foreach (IScreenBall b in ModelApi.GetScreenBalls())
+            foreach (ViewBall b in ModelApi.GetViewBalls())
             {
                 var ellipse = new Ellipse
                 {

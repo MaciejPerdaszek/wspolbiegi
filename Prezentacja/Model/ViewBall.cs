@@ -1,14 +1,16 @@
 ﻿using Dane;
+using Logika;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Prezentacja.Model
 {
-    public class ScreenBall : IScreenBall
+    public class ViewBall : IViewBall
     {
         private double _x;
         private double _y;
-        private double _d;
+        private double _diameter;
+        private ILogicBall _logicBall;
 
         public double X
         {
@@ -34,22 +36,23 @@ namespace Prezentacja.Model
                 OnPropertyChanged("Y");
             }
         }
-        public double diameter { get => _d; set => _d = value; }
+        public double diameter { get => _diameter; set => _diameter = value; }
 
-        public ScreenBall(IBall ball, double diameter)
+        public ViewBall(ILogicBall logicBall)
         {
-            this.X = ball.X;
-            this.Y = ball.Y;
-            this.diameter = diameter;
-            ball.PropertyChanged += Ball_PropertyChanged;
+            _x = logicBall.X;
+            _y = logicBall.Y;
+            _diameter = logicBall.Diameter;
+            _logicBall = logicBall;
+            logicBall.PropertyChanged += LogicBall_PropertyChanged;
         }
 
-        private void Ball_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void LogicBall_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (sender != null) { 
                 IBall ball = (IBall)sender;
-                this.X = ball.X;
-                this.Y = ball.Y;
+                X = ball.X;
+                Y = ball.Y;
             }   
         }
 
@@ -60,7 +63,7 @@ namespace Prezentacja.Model
         }
         public void Dispose()
         {
-            this.Dispose();
+            _logicBall.Dispose();
         }
     }
 }

@@ -28,12 +28,12 @@ namespace Prezentacja.ViewModel
 
         public event EventHandler? CanExecuteChanged;
 
-        public bool CanExecute(object parameter)
+        public bool CanExecute(object? parameter)
         {
             return canExecute == null || canExecute(parameter);
         }
 
-        public void Execute(object parameter) 
+        public void Execute(object? parameter) 
         {
             onExecute(parameter);
         }
