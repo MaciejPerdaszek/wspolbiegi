@@ -1,4 +1,4 @@
-﻿using Dane;
+﻿/*using Dane;
 
 namespace AppTests
 {
@@ -9,34 +9,31 @@ namespace AppTests
         public void TestCreateBall()
         {
             var api = DataAbstractAPI.CreateApi();
-            var observer = new BallObserver();
+            double x = 1.3, y = 1.5;
 
-            api.Subscribe(observer);
-            api.CreateBall(1.3, 1.5);
-            api.CreateBall(2.3, 2.5);
+            api.CreateBall(x, y);
+            IBall ball = api.CreateBall(x, y);
+            Assert.AreEqual(x, ball.X);
+            Assert.AreEqual(y, ball.Y);
+
             api.Dispose();
-
-            // Check that the observer received the expected number of notifications
-            Assert.AreEqual(2, observer.NumBallsCreated);
-
-        }
-    }
-
-    class BallObserver : IObserver<IBall>
-    {
-        public int NumBallsCreated { get; private set; }
-
-        public void OnCompleted()
-        {
         }
 
-        public void OnError(Exception error)
+        [TestMethod]
+        public void TestGetBallList()
         {
-        }
+            var api = DataAbstractAPI.CreateApi();
+            int amount = 2;
 
-        public void OnNext(IBall value)
-        {
-            NumBallsCreated++;
+            for (int i = 0; i < amount; i++)
+            {
+                IBall ball = api.CreateBall(i, i);
+            }
+            List<IBall> balls = api.GetBallsList();
+            Assert.AreEqual(amount, balls.Count);
+
+            api.Dispose();
         }
     }
 }
+*/

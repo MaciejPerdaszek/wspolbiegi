@@ -2,6 +2,7 @@
 using Logika;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace Prezentacja.Model
 {
@@ -49,11 +50,15 @@ namespace Prezentacja.Model
 
         private void LogicBall_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (sender != null) { 
-                IBall ball = (IBall)sender;
-                X = ball.X;
-                Y = ball.Y;
-            }   
+            if (e.PropertyName == "X")
+            {
+                X = _logicBall.X;
+            }
+
+            if (e.PropertyName == "Y")
+            {
+                Y = _logicBall.Y;
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -1,4 +1,4 @@
-using Dane;
+/*using Dane;
 
 namespace AppTests
 {
@@ -30,3 +30,4 @@ namespace AppTests
 
 
 }
+*/

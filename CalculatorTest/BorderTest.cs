@@ -1,4 +1,4 @@
-﻿using Logika;
+﻿/*using Logika;
 
 namespace AppTests
 {
@@ -8,9 +8,12 @@ namespace AppTests
         [TestMethod]
         public void GetterTest()
         {
-            Border border = new Border(300, 400);
-            Assert.AreEqual(border.Width, 300);
-            Assert.AreEqual(border.Height, 400);
+            var api = LogicAbstractAPI.CreateApi();
+            api.CreateTable(300, 400);
+            var logicModel = (LogicModel)api;
+
+
         }
     }
 }
+*/

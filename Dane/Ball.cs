@@ -28,7 +28,7 @@ namespace Dane
             set
             {
                 _x = value;
-                PropertyChangedEvent();
+                PropertyChangedEvent("X");
 
             }
         }
@@ -42,7 +42,7 @@ namespace Dane
             set
             {
                 _y = value;
-                PropertyChangedEvent();
+                PropertyChangedEvent("Y");
 
             }
         }

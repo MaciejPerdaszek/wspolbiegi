@@ -38,17 +38,17 @@ namespace Logika
             DataApi = DataAbstractAPI.CreateApi();
         }
 
-  
+
         private void Ball_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (sender != null)
             {
-                    LogicBall ball = (LogicBall) sender;
-                    if (ball.X > width) ball.X = width;
-                    else if (ball.X < 0) ball.X = 0;
+                LogicBall ball = (LogicBall)sender;
+                if (ball.X > width) ball.X = width;
+                else if (ball.X < 0) ball.X = 0;
 
-                    if (ball.Y > height) ball.Y = height;
-                    else if (ball.Y < 0) ball.Y = 0;
+                if (ball.Y > height) ball.Y = height;
+                else if (ball.Y < 0) ball.Y = 0;
             }
         }
         public override void CreateTable(int width, int height)
@@ -64,8 +64,8 @@ namespace Logika
                 for (int i = 0; i < amount; i++)
                 {
                     Random r = new();
-                    double x = r.NextDouble() * 600;
-                    double y = r.NextDouble() * 400;
+                    double x = r.NextDouble() * 500;
+                    double y = r.NextDouble() * 300;
                     ILogicBall ball = new LogicBall(DataApi.CreateBall(x, y), radius);
                     ball.PropertyChanged += Ball_PropertyChanged;
                     list.Add(ball);
