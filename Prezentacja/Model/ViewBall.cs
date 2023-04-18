@@ -62,10 +62,12 @@ namespace Prezentacja.Model
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string name = "")
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
         public void Dispose()
         {
             _logicBall.Dispose();

@@ -8,8 +8,6 @@ namespace Prezentacja.Model
     {
         private readonly LogicAbstractAPI LogicApi;
 
-       
-
         public Model()
         {
             LogicApi = LogicAbstractAPI.CreateApi();

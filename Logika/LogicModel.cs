@@ -5,7 +5,6 @@ namespace Logika
 {
     internal class LogicModel : LogicAbstractAPI
     {
-
         private readonly DataAbstractAPI DataApi;
 
         private int _width;
@@ -23,6 +22,7 @@ namespace Logika
                 _width = value;
             }
         }
+
         public int height
         {
             get
@@ -37,7 +37,6 @@ namespace Logika
         public LogicModel() { 
             DataApi = DataAbstractAPI.CreateApi();
         }
-
 
         private void Ball_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {

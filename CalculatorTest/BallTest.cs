@@ -1,11 +1,10 @@
-/*using Dane;
+using Dane;
 
 namespace AppTests
 {
     [TestClass]
     public class BallTest
     {
-       
         [TestMethod]
         public void ChangePositionTest()
         {
@@ -27,7 +26,4 @@ namespace AppTests
         }
 
     }
-
-
 }
-*/

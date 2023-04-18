@@ -6,7 +6,6 @@ namespace Dane
 {
     internal class Ball : IBall, INotifyPropertyChanged
     {
-
         private double _x;
         private double _y;
         private Timer _timer;
@@ -59,8 +58,6 @@ namespace Dane
             X += _random.NextDouble() * 10 -5;
             Y += _random.NextDouble() * 10 -5;
         }
-
-
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

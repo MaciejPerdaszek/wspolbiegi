@@ -14,6 +14,7 @@ namespace Logika
             get { return _dataBall.X; }
             set { _dataBall.X = value; PropertyChangedEvent("X"); }
         }
+
         public double Y
         {
             get { return _dataBall.Y; }
@@ -42,10 +43,12 @@ namespace Logika
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
         private void PropertyChangedEvent([CallerMemberName] string callerName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
         }
+
         public void Dispose()
         {
             _dataBall.Dispose();

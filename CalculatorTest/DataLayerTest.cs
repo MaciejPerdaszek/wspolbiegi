@@ -1,4 +1,4 @@
-﻿/*using Dane;
+﻿using Dane;
 
 namespace AppTests
 {
@@ -9,31 +9,13 @@ namespace AppTests
         public void TestCreateBall()
         {
             var api = DataAbstractAPI.CreateApi();
-            double x = 1.3, y = 1.5;
+            double expectedX = 10.0;
+            double expectedY = 20.0;
 
-            api.CreateBall(x, y);
-            IBall ball = api.CreateBall(x, y);
-            Assert.AreEqual(x, ball.X);
-            Assert.AreEqual(y, ball.Y);
+            IBall ball = api.CreateBall(expectedX, expectedY);
 
-            api.Dispose();
-        }
-
-        [TestMethod]
-        public void TestGetBallList()
-        {
-            var api = DataAbstractAPI.CreateApi();
-            int amount = 2;
-
-            for (int i = 0; i < amount; i++)
-            {
-                IBall ball = api.CreateBall(i, i);
-            }
-            List<IBall> balls = api.GetBallsList();
-            Assert.AreEqual(amount, balls.Count);
-
-            api.Dispose();
+            Assert.AreEqual(expectedX, ball.X);
+            Assert.AreEqual(expectedY, ball.Y);
         }
     }
 }
-*/

@@ -41,6 +41,7 @@ namespace Prezentacja.ViewModel
         public Canvas MyCanvas { get; } = new Canvas();
 
         public double CanvasWidth { get; set; }
+
         public double CanvasHeight { get; set; }
 
         public ICommand CreateBallsCommand { get; set; }
@@ -53,7 +54,6 @@ namespace Prezentacja.ViewModel
                 amountOfBalls = Convert.ToInt32(value);
             }
         }
-
 
         private void CreateBallsOnBoard(object obj)
         {

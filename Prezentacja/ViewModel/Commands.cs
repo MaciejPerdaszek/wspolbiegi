@@ -37,8 +37,5 @@ namespace Prezentacja.ViewModel
         {
             onExecute(parameter);
         }
-
-
-
     }
 }

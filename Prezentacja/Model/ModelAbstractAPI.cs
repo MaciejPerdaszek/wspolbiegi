@@ -22,6 +22,7 @@ namespace Prezentacja.Model
         }
 
         public abstract void CreateBalls(int amount, int radius);
+
         public abstract void CreateTable(int width, int height);
 
         public abstract List<IViewBall> GetViewBalls();
