@@ -10,7 +10,7 @@ namespace Prezentacja.Model
         double X { get; set; }
         double Y { get; set; }
 
-        double diameter { get; set; }
+        double Diameter { get; set; }
     }
     public abstract class ModelAbstractAPI : IDisposable
     {

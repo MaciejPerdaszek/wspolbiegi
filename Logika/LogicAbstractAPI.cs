@@ -15,7 +15,7 @@ namespace Logika
             return new LogicModel();   
         }
 
-        public abstract List<ILogicBall> CreateBalls(int amount, int radius);
+        public abstract List<ILogicBall> CreateBalls(int amount, double diameter);
 
         public abstract void CreateTable(int width, int height);
 

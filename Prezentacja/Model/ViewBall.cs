@@ -41,32 +41,8 @@ namespace Prezentacja.Model
             }
         }
 
-        public double realX
-        {
-            get
-            {
-                return _realX;
-            }
-            set
-            {
-                _realX = value;
-            }
-        }
 
-        public double realY
-        {
-            get
-            {
-                return _realY;
-            }
-            set
-            {
-                _realY = value;
-            }
-        }
-
-
-        public double diameter { get => _diameter; set => _diameter = value; }
+        public double Diameter { get => _diameter; set => _diameter = value; }
 
         public ViewBall(ILogicBall logicBall)
         {
@@ -83,8 +59,8 @@ namespace Prezentacja.Model
 
         private void OnTimerTick(object? sender, EventArgs e)
         {
-            var dx = realX - X;
-            var dy = realY - Y;
+            var dx = _realX - X;
+            var dy = _realY - Y;
 
             if (dx != 0 || dy != 0)
             {
@@ -98,8 +74,8 @@ namespace Prezentacja.Model
                 }
                 else
                 {
-                    X = realX;
-                    Y = realY;
+                    X = _realX;
+                    Y = _realY;
                 }
             }
         }
@@ -108,12 +84,12 @@ namespace Prezentacja.Model
         {
             if (e.PropertyName == "X")
             {
-                realX = _logicBall.X;
+                _realX = _logicBall.X;
             }
 
             if (e.PropertyName == "Y")
             {
-                realY = _logicBall.Y;
+                _realY = _logicBall.Y;
             }
         }
 
