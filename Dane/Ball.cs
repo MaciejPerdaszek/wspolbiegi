@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace Dane
@@ -55,8 +54,8 @@ namespace Dane
         {
             if (state != null)
                 throw new ArgumentOutOfRangeException("state");
-            X += _random.NextDouble() * 10 -5;
-            Y += _random.NextDouble() * 10 -5;
+            X += _random.NextDouble() * 80 - 40;
+            Y += _random.NextDouble() * 80 - 40;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

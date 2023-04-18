@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using Dane;
 
 namespace Logika
 {

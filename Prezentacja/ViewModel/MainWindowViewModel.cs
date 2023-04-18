@@ -1,22 +1,9 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Prezentacja.Model;
-using Dane;
 using System.Windows.Controls;
-using System.Reactive;
 using System.Windows.Data;
-using System.Windows.Threading;
 using System.Windows.Shapes;
-using System.Windows;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Windows.Media.Animation;
-using System.Drawing;
-using System.Windows.Media.Media3D;
-using System.Diagnostics;
 
 namespace Prezentacja.ViewModel
 {

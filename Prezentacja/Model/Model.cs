@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Dane;
 using Logika;
 
 namespace Prezentacja.Model
