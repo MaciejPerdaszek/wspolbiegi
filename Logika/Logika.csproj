@@ -8,6 +8,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Dane\Dane.csproj" />
+	  <PackageReference Include="System.Reactive" Version="5.0.0" />
+	  <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+		  <_Parameter1>LogicLayerTest</_Parameter1>
+	  </AssemblyAttribute>
   </ItemGroup>
 	
 </Project>
