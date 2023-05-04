@@ -1,5 +1,4 @@
 ﻿using Dane;
-using System.ComponentModel;
 
 namespace Logika
 {
@@ -38,17 +37,12 @@ namespace Logika
             DataApi = DataAbstractAPI.CreateApi();
         }
 
-        private void Ball_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void Ball_LogicBallChanged(ILogicBall sender)
         {
-            if (sender != null)
-            {
-                LogicBall ball = (LogicBall)sender;
-                if (ball.X > width) ball.X = width;
-                else if (ball.X < 0) ball.X = 0;
+            LogicBall ball = (LogicBall)sender;
+            if (ball.X > width || ball.X < 0) ball.directionX = ball.directionX * -1;
 
-                if (ball.Y > height) ball.Y = height;
-                else if (ball.Y < 0) ball.Y = 0;
-            }
+            if (ball.Y > height || ball.Y < 0) ball.directionY = ball.directionY * -1;
         }
         public override void CreateTable(int width, int height)
         {
@@ -56,9 +50,8 @@ namespace Logika
             _height = height;
         }
 
-        public override List<ILogicBall> CreateBalls(int amount, double diameter)
+        public override void CreateBalls(int amount, double diameter)
         {
-            List<ILogicBall> list = new();
             if (width != 0 && height != 0)
                 for (int i = 0; i < amount; i++)
                 {
@@ -66,10 +59,8 @@ namespace Logika
                     double x = r.NextDouble() * 500;
                     double y = r.NextDouble() * 300;
                     ILogicBall ball = new LogicBall(DataApi.CreateBall(x, y), diameter);
-                    ball.PropertyChanged += Ball_PropertyChanged;
-                    list.Add(ball);
+                    ball.LogicBallChanged += Ball_LogicBallChanged;
                 }
-            return list;
         }
 
         public override void Dispose()

@@ -1,12 +1,34 @@
-﻿using System.ComponentModel;
-
-namespace Dane
+﻿namespace Dane
 {
-    public interface IBall : INotifyPropertyChanged, IDisposable
+
+    public delegate void DataBallChangedEventHandler(IBall sender);
+    public interface IBall : IDisposable
     {
-        double X { get; set; }
-        double Y { get; set; }
+
+        double X { get; internal set; }
+        double Y { get; internal set; }
+
+        double speedX { get; set; }
+        double speedY { get; set; }
+
+        int directionX { get; set; }
+        int directionY { get; set; }
+
+        public event DataBallChangedEventHandler DataBallChanged
+        {
+            add
+            {
+                DataBallChanged += value;
+            }
+            remove
+            {
+                DataBallChanged -= value;
+            }
+        }
+
     }
+
+
 
     public abstract class DataAbstractAPI
     {

@@ -1,8 +1,6 @@
 ﻿using Logika;
-using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Threading;
 
 namespace Prezentacja.Model
 {
@@ -14,7 +12,7 @@ namespace Prezentacja.Model
         private double _realY;
         private double _diameter;
         private ILogicBall _logicBall;
-        private DispatcherTimer _timer;
+        private int _id;
 
         public double X
         {
@@ -44,20 +42,24 @@ namespace Prezentacja.Model
 
         public double Diameter { get => _diameter; set => _diameter = value; }
 
+        public int id { get => _id; set => _id = value; }
+
         public ViewBall(ILogicBall logicBall)
         {
             _x = logicBall.X;
             _y = logicBall.Y;
             _diameter = logicBall.Diameter;
             _logicBall = logicBall;
-            logicBall.PropertyChanged += LogicBall_PropertyChanged;
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromMilliseconds(10); 
-            _timer.Tick += OnTimerTick;
-            _timer.Start();
+            logicBall.LogicBallChanged += LogicBall_LogicBallChanged;
         }
 
-        private void OnTimerTick(object? sender, EventArgs e)
+        private void LogicBall_LogicBallChanged(ILogicBall sender)
+        {
+            _realX = _logicBall.X;
+            _realY = _logicBall.Y;
+        }
+
+        /*private void OnTimerTick(object? sender, EventArgs e)
         {
             var dx = _realX - X;
             var dy = _realY - Y;
@@ -78,20 +80,7 @@ namespace Prezentacja.Model
                     Y = _realY;
                 }
             }
-        }
-
-            private void LogicBall_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "X")
-            {
-                _realX = _logicBall.X;
-            }
-
-            if (e.PropertyName == "Y")
-            {
-                _realY = _logicBall.Y;
-            }
-        }
+        }*/
 
 
         public event PropertyChangedEventHandler? PropertyChanged;

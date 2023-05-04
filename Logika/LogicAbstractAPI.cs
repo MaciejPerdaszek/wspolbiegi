@@ -1,13 +1,34 @@
-﻿using System.ComponentModel;
+﻿using Dane;
+using System.ComponentModel;
 
 namespace Logika
 {
-    public interface ILogicBall : INotifyPropertyChanged, IDisposable
+
+    public delegate void LogicBallChangedEventHandler(ILogicBall sender);
+    public interface ILogicBall : IDisposable
     {
-        double X { get; set; }
-        double Y { get; set; }
-        double Diameter { get; set; }
+        double X { get; }
+        double Y { get; }
+        double speedX { get; internal set; }
+        double speedY { get; internal set; }
+        int directionX { get; internal set; }
+        int directionY { get; internal set; }
+
+        double Diameter { get; internal set; }
+
+        public event LogicBallChangedEventHandler LogicBallChanged
+        {
+            add
+            {
+                LogicBallChanged += value;
+            }
+            remove
+            {
+                LogicBallChanged -= value;
+            }
+        }
     }
+
     public abstract class LogicAbstractAPI : IDisposable
     {
         public static LogicAbstractAPI CreateApi()
@@ -15,7 +36,7 @@ namespace Logika
             return new LogicModel();   
         }
 
-        public abstract List<ILogicBall> CreateBalls(int amount, double diameter);
+        public abstract void CreateBalls(int amount, double diameter);
 
         public abstract void CreateTable(int width, int height);
 

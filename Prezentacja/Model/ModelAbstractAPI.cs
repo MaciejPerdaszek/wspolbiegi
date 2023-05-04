@@ -7,14 +7,16 @@ namespace Prezentacja.Model
 
     public interface IViewBall : INotifyPropertyChanged, IDisposable
     {
-        double X { get; set; }
-        double Y { get; set; }
+        double X { get; internal set; }
+        double Y { get; internal set; }
 
-        double Diameter { get; set; }
+        double Diameter { get; internal set; }
+
+        int id { get; internal set; }
     }
     public abstract class ModelAbstractAPI : IDisposable
     {
-        public List<IViewBall> viewBallsList = new();
+        //public List<IViewBall> viewBallsList = new();
         public static ModelAbstractAPI CreateApi()
         {
             return new Model();
@@ -24,7 +26,9 @@ namespace Prezentacja.Model
 
         public abstract void CreateTable(int width, int height);
 
-        public abstract List<IViewBall> GetViewBalls();
+        public abstract int getBallsCount();
+
+        //public abstract List<IViewBall> GetViewBalls();
 
         public abstract void Dispose();
 

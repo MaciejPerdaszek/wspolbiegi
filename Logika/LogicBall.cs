@@ -1,6 +1,4 @@
 ﻿using Dane;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace Logika
 {
@@ -9,49 +7,52 @@ namespace Logika
         private double _diameter;
         private IBall _dataBall;
 
+        public event LogicBallChangedEventHandler? ballChangedEventHandler;
+
         public double X
         {
             get { return _dataBall.X; }
-            set { _dataBall.X = value; PropertyChangedEvent("X"); }
+            //set { /*_dataBall.X = value;*/ OnBallChangedEvent(); }
         }
 
         public double Y
         {
             get { return _dataBall.Y; }
-            set { _dataBall.Y = value; PropertyChangedEvent("Y"); }
+            //set {/* _dataBall.Y = value; */OnBallChangedEvent(); }
         }
 
         public double Diameter { get => _diameter; set => _diameter = value; }
+
+        public double speedX { get => _dataBall.speedX; set => _dataBall.speedX = value; }
+        public double speedY { get => _dataBall.speedY; set => _dataBall.speedY = value; }
+        public int directionX { get => _dataBall.directionX; set => _dataBall.directionX = value; }
+        public int directionY { get => _dataBall.directionY; set => _dataBall.directionY = value; }
 
         public LogicBall(IBall dataBall, double diameter)
         {
             _diameter = diameter;
             _dataBall = dataBall;
-            dataBall.PropertyChanged += DataBall_PropertyChanged;
+            dataBall.DataBallChanged += DataBall_DataBallChanged;
         }
 
-        private void DataBall_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void DataBall_DataBallChanged(IBall sender)
         {
-            if (e.PropertyName == "X")
-            {
-                PropertyChangedEvent("X");
-            }
-            else if (e.PropertyName == "Y")
-            {
-                PropertyChangedEvent("Y");
-            }
+            OnBallChangedEvent();
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void PropertyChangedEvent([CallerMemberName] string callerName = "")
+        private void OnBallChangedEvent()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
+            ballChangedEventHandler?.Invoke(this);
         }
 
         public void Dispose()
         {
             _dataBall.Dispose();
+        }
+
+        void IDisposable.Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }
