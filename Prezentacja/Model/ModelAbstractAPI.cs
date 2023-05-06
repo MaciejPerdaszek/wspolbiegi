@@ -16,7 +16,7 @@ namespace Prezentacja.Model
     }
     public abstract class ModelAbstractAPI : IDisposable
     {
-        //public List<IViewBall> viewBallsList = new();
+        public List<IViewBall> viewBallsList = new();
         public static ModelAbstractAPI CreateApi()
         {
             return new Model();
@@ -28,7 +28,7 @@ namespace Prezentacja.Model
 
         public abstract int getBallsCount();
 
-        //public abstract List<IViewBall> GetViewBalls();
+        public abstract List<IViewBall> GetViewBalls();
 
         public abstract void Dispose();
 

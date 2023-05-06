@@ -9,6 +9,7 @@
 
         private double _speedX;
         private double _speedY;
+        private double _mass;
 
         private int _directionX;
         private int _directionY;
@@ -68,6 +69,7 @@
         }
         public int directionX { get => _directionX; set => _directionX = value; }
         public int directionY { get => _directionY; set => _directionY = value; }
+        public double Mass { get => _mass; set => _mass = value; }
 
         public event DataBallChangedEventHandler DataBallChanged;
 

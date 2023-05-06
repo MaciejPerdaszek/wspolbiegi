@@ -13,6 +13,7 @@ namespace Logika
         double speedY { get; internal set; }
         int directionX { get; internal set; }
         int directionY { get; internal set; }
+        double Mass { get; internal set; }  
 
         double Diameter { get; internal set; }
 

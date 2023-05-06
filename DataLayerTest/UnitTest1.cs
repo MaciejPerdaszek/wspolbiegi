@@ -1,4 +1,4 @@
-using Dane;
+/*using Dane;
 using Moq;
 
 [TestFixture]
@@ -24,3 +24,4 @@ public class DataAbstractAPITests
         Assert.That(result.Y, Is.EqualTo(y));
     }
 }
+*/

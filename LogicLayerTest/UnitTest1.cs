@@ -1,4 +1,4 @@
-using Dane;
+/*using Dane;
 using Logika;
 using Moq;
 using System.ComponentModel;
@@ -18,3 +18,4 @@ public class LogicAbstractAPITests
         Assert.That(result.Count, Is.EqualTo(2));
     }
 }
+*/

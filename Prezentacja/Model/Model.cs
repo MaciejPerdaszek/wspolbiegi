@@ -25,10 +25,10 @@ namespace Prezentacja.Model
             return _ballsCounter;
         }
 
-        /*public override List<IViewBall> GetViewBalls()
+        public override List<IViewBall> GetViewBalls()
         {
             return viewBallsList;
-        }*/
+        }
 
         public override void Dispose()
         {

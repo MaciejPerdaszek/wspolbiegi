@@ -25,8 +25,10 @@ namespace Logika
 
         public double speedX { get => _dataBall.speedX; set => _dataBall.speedX = value; }
         public double speedY { get => _dataBall.speedY; set => _dataBall.speedY = value; }
+        public double Mass { get => _dataBall.Mass; set => _dataBall.Mass = value; }    
         public int directionX { get => _dataBall.directionX; set => _dataBall.directionX = value; }
         public int directionY { get => _dataBall.directionY; set => _dataBall.directionY = value; }
+
 
         public LogicBall(IBall dataBall, double diameter)
         {
