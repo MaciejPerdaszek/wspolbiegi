@@ -5,9 +5,9 @@ namespace Logika
     internal class LogicBall : ILogicBall
     {
         private double _diameter;
+        private double _mass;
         private IBall _dataBall;
-
-        public event LogicBallChangedEventHandler? ballChangedEventHandler;
+        private LogicBallChangedEventHandler? _ballChangedEventHandler;
 
         public double X
         {
@@ -25,26 +25,34 @@ namespace Logika
 
         public double speedX { get => _dataBall.speedX; set => _dataBall.speedX = value; }
         public double speedY { get => _dataBall.speedY; set => _dataBall.speedY = value; }
-        public double Mass { get => _dataBall.Mass; set => _dataBall.Mass = value; }    
+        public double Mass { get => _mass; set => _mass = value; }
         public int directionX { get => _dataBall.directionX; set => _dataBall.directionX = value; }
         public int directionY { get => _dataBall.directionY; set => _dataBall.directionY = value; }
 
 
-        public LogicBall(IBall dataBall, double diameter)
+        public LogicBall(IBall dataBall, double diameter, double mass)
         {
             _diameter = diameter;
+            _mass = mass;
             _dataBall = dataBall;
             dataBall.DataBallChanged += DataBall_DataBallChanged;
         }
 
         private void DataBall_DataBallChanged(IBall sender)
         {
-            OnBallChangedEvent();
+            _ballChangedEventHandler?.Invoke(this);
         }
 
-        private void OnBallChangedEvent()
+        public event LogicBallChangedEventHandler LogicBallChanged
         {
-            ballChangedEventHandler?.Invoke(this);
+            add
+            {
+                _ballChangedEventHandler += value;
+            }
+            remove
+            {
+                _ballChangedEventHandler -= value;
+            }
         }
 
         public void Dispose()

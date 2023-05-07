@@ -9,7 +9,6 @@
 
         private double _speedX;
         private double _speedY;
-        private double _mass;
 
         private int _directionX;
         private int _directionY;
@@ -18,6 +17,11 @@
         {
             this._x = x;
             this._y = y;
+            Random random = new Random();
+            _speedX = random.NextDouble();
+            _speedY = random.NextDouble();
+            _directionX = random.Next(2) * 2 - 1; 
+            _directionY = random.Next(2) * 2 - 1;
             _speedTimerX = new Timer(MoveX, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
             _speedTimerY = new Timer(MoveY, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
         }
@@ -69,7 +73,6 @@
         }
         public int directionX { get => _directionX; set => _directionX = value; }
         public int directionY { get => _directionY; set => _directionY = value; }
-        public double Mass { get => _mass; set => _mass = value; }
 
         public event DataBallChangedEventHandler DataBallChanged;
 

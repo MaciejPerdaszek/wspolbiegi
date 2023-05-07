@@ -14,9 +14,9 @@ namespace Prezentacja.Model
             LogicApi = LogicAbstractAPI.CreateApi();
         }
 
-        public override void CreateBalls(int amount, int radius)
+        public override void CreateBalls(int amount, double radius, double mass)
         {
-            LogicApi.CreateBalls(amount, radius);
+            LogicApi.CreateBalls(amount, radius, mass);
             _ballsCounter += amount;
         }
 

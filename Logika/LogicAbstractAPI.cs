@@ -14,20 +14,10 @@ namespace Logika
         int directionX { get; internal set; }
         int directionY { get; internal set; }
         double Mass { get; internal set; }  
-
         double Diameter { get; internal set; }
 
-        public event LogicBallChangedEventHandler LogicBallChanged
-        {
-            add
-            {
-                LogicBallChanged += value;
-            }
-            remove
-            {
-                LogicBallChanged -= value;
-            }
-        }
+        event LogicBallChangedEventHandler LogicBallChanged;
+  
     }
 
     public abstract class LogicAbstractAPI : IDisposable
@@ -37,7 +27,7 @@ namespace Logika
             return new LogicModel();   
         }
 
-        public abstract void CreateBalls(int amount, double diameter);
+        public abstract void CreateBalls(int amount, double diameter, double mass);
 
         public abstract void CreateTable(int width, int height);
 

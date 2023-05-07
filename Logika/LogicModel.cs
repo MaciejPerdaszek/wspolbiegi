@@ -44,7 +44,7 @@ namespace Logika
             _height = height;
         }
 
-        public override void CreateBalls(int amount, double diameter)
+        public override void CreateBalls(int amount, double diameter, double mass)
         {
             if (width != 0 && height != 0)
                 for (int i = 0; i < amount; i++)
@@ -52,7 +52,7 @@ namespace Logika
                     Random r = new();
                     double x = r.NextDouble() * 500;
                     double y = r.NextDouble() * 300;
-                    ILogicBall ball = new LogicBall(DataApi.CreateBall(x, y), diameter);
+                    ILogicBall ball = new LogicBall(DataApi.CreateBall(x, y), diameter, mass);
                     ball.LogicBallChanged += Ball_LogicBallChanged;
                     _balls.Add(ball);
                 }

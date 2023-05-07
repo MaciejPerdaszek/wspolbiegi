@@ -45,7 +45,7 @@ namespace Prezentacja.ViewModel
         private void CreateBallsOnBoard(object obj)
         {
             ModelApi.CreateTable(500, 300);
-            ModelApi.CreateBalls(amountOfBalls, 5);
+            ModelApi.CreateBalls(amountOfBalls, 5, 1);
 
             foreach (IViewBall b in ModelApi.GetViewBalls())
             {

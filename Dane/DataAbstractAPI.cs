@@ -10,7 +10,6 @@
 
         double speedX { get; set; }
         double speedY { get; set; }
-        double Mass { get; set; }
 
         int directionX { get; set; }
         int directionY { get; set; }

@@ -22,7 +22,7 @@ namespace Prezentacja.Model
             return new Model();
         }
 
-        public abstract void CreateBalls(int amount, int radius);
+        public abstract void CreateBalls(int amount, double radius, double mass);
 
         public abstract void CreateTable(int width, int height);
 
