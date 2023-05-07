@@ -6,7 +6,17 @@
         {
             Random r = new();
             Ball newBall = new(x, y);
-
+            Thread ballThread = new Thread(() => //?
+            {
+                while (true)
+                {
+                    lock(newBall)
+                    {
+                        //?
+                    }
+                }
+            });
+            ballThread.Start();
             return newBall;
         }
     }
