@@ -7,27 +7,18 @@ namespace Prezentacja.Model
     {
         private readonly LogicAbstractAPI LogicApi;
 
-        private int _ballsCounter = 0;
-
         public Model()
         {
             LogicApi = LogicAbstractAPI.CreateApi();
         }
 
-        public override void CreateBalls(int amount, double radius, double mass)
+        public override List<IViewBall> CreateBalls(int amount, double radius, double mass)
         {
-            LogicApi.CreateBalls(amount, radius, mass);
-            _ballsCounter += amount;
-        }
-
-        public override int getBallsCount()
-        {
-            return _ballsCounter;
-        }
-
-        public override List<IViewBall> GetViewBalls()
-        {
-            return viewBallsList;
+            List<IViewBall> list = new List<IViewBall>();
+            for (int i = 0; i < amount; i++)
+                list.Add(new ViewBall(LogicApi.CreateBall(radius, mass)));
+            
+            return list;
         }
 
         public override void Dispose()

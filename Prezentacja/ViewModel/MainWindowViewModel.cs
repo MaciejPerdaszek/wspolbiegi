@@ -4,6 +4,7 @@ using Prezentacja.Model;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Shapes;
+using System.Collections.Generic;
 
 namespace Prezentacja.ViewModel
 {
@@ -12,6 +13,8 @@ namespace Prezentacja.ViewModel
         private ModelAbstractAPI ModelApi;
 
         private int amountOfBalls;
+
+        private List<IViewBall> viewBalls;
 
         public MainWindowViewModel()
         {
@@ -45,9 +48,7 @@ namespace Prezentacja.ViewModel
         private void CreateBallsOnBoard(object obj)
         {
             ModelApi.CreateTable(500, 300);
-            ModelApi.CreateBalls(amountOfBalls, 5, 1);
-
-            foreach (IViewBall b in ModelApi.GetViewBalls())
+            foreach (IViewBall b in ModelApi.CreateBalls(amountOfBalls, 2, 1))
             {
                 var ellipse = new Ellipse
                 {

@@ -8,8 +8,6 @@ namespace Prezentacja.Model
     {
         private double _x;
         private double _y;
-        private double _realX;
-        private double _realY;
         private double _diameter;
         private ILogicBall _logicBall;
         private int _id;
@@ -55,33 +53,9 @@ namespace Prezentacja.Model
 
         private void LogicBall_LogicBallChanged(ILogicBall sender)
         {
-            _realX = _logicBall.X;
-            _realY = _logicBall.Y;
+            X = _logicBall.X;
+            Y = _logicBall.Y;
         }
-
-        /*private void OnTimerTick(object? sender, EventArgs e)
-        {
-            var dx = _realX - X;
-            var dy = _realY - Y;
-
-            if (dx != 0 || dy != 0)
-            {
-                double step = 0.5;
-                var distance = Math.Sqrt(dx * dx + dy * dy);
-                if (distance > step)
-                {
-                    var ratio = step / distance;
-                    X += dx * ratio;
-                    Y += dy * ratio;
-                }
-                else
-                {
-                    X = _realX;
-                    Y = _realY;
-                }
-            }
-        }*/
-
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

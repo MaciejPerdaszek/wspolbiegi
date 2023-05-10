@@ -1,4 +1,6 @@
-﻿namespace Dane
+﻿using System.Diagnostics;
+
+namespace Dane
 {
     internal class Ball : IBall
     {
@@ -18,14 +20,13 @@
             this._x = x;
             this._y = y;
             Random random = new Random();
-            _speedX = random.NextDouble();
-            _speedY = random.NextDouble();
-            _directionX = random.Next(2) * 2 - 1; 
+            _speedX = random.NextDouble() * 200;
+            _speedY = random.NextDouble() * 200;
+            _directionX = random.Next(2) * 2 - 1;
             _directionY = random.Next(2) * 2 - 1;
-            _speedTimerX = new Timer(MoveX, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
-            _speedTimerY = new Timer(MoveY, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
+            Move();
         }
-    
+   
 
         public double X
         {
@@ -37,7 +38,6 @@
             {
                 _x = value;
                 OnBallChangedEvent();
-
             }
         }
 
@@ -59,7 +59,6 @@
             set 
             { 
                 _speedX = value;
-                _speedTimerX.Change(TimeSpan.Zero, TimeSpan.FromMilliseconds(value));
             } 
         }
         public double speedY
@@ -68,10 +67,19 @@
             set
             {
                 _speedY = value;
-                _speedTimerY.Change(TimeSpan.Zero, TimeSpan.FromMilliseconds(value));
             }
         }
-        public int directionX { get => _directionX; set => _directionX = value; }
+        public int directionX
+        {
+            get
+            {
+               return _directionX;
+            }
+            set
+            {
+                _directionX = value;
+            }
+        }
         public int directionY { get => _directionY; set => _directionY = value; }
 
         public event DataBallChangedEventHandler DataBallChanged;
@@ -82,18 +90,27 @@
             _speedTimerY.Dispose();
         }
 
-        private void MoveX(object? state)
+        private void Move()
         {
-            if (state != null)
-                throw new ArgumentOutOfRangeException("state");
-            X += directionX;
-        }
+            Task t1 = Task.Run(() =>
+                {
+                    while (true)
+                    {
+                        X += directionX;
+                        Thread.Sleep(TimeSpan.FromMilliseconds(speedX * 0.5));
+                    }
+                });
+            Task t2 = Task.Run(() =>
+            {
+                while (true)
+                {
+                    Y += directionY;
+                    Thread.Sleep(TimeSpan.FromMilliseconds(speedY * 0.5));
+                }
+            });
 
-        private void MoveY(object? state)
-        {
-            if (state != null)
-                throw new ArgumentOutOfRangeException("state");
-            Y += directionY;
+
+
         }
 
         private void OnBallChangedEvent()

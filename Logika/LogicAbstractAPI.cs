@@ -27,7 +27,7 @@ namespace Logika
             return new LogicModel();   
         }
 
-        public abstract void CreateBalls(int amount, double diameter, double mass);
+        public abstract ILogicBall CreateBall(double diameter, double mass);
 
         public abstract void CreateTable(int width, int height);
 
