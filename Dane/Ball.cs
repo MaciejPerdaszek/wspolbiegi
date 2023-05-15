@@ -1,13 +1,9 @@
-﻿using System.Diagnostics;
-
-namespace Dane
+﻿namespace Dane
 {
     internal class Ball : IBall
     {
         private double _x;
         private double _y;
-        private Timer _speedTimerX;
-        private Timer _speedTimerY;
 
         private double _speedX;
         private double _speedY;
@@ -82,12 +78,11 @@ namespace Dane
         }
         public int directionY { get => _directionY; set => _directionY = value; }
 
-        public event DataBallChangedEventHandler DataBallChanged;
+        public event DataBallChangedEventHandler? DataBallChanged;
 
         public void Dispose()
         {
-            _speedTimerX.Dispose();
-            _speedTimerY.Dispose();
+            
         }
 
         private void Move()

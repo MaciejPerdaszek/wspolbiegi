@@ -12,11 +12,11 @@ namespace Prezentacja.Model
             LogicApi = LogicAbstractAPI.CreateApi();
         }
 
-        public override List<IViewBall> CreateBalls(int amount, double radius, double mass)
+        public override List<IViewBall> CreateBalls(int amount, double diameter, double mass)
         {
             List<IViewBall> list = new List<IViewBall>();
             for (int i = 0; i < amount; i++)
-                list.Add(new ViewBall(LogicApi.CreateBall(radius, mass)));
+                list.Add(new ViewBall(LogicApi.CreateBall(diameter, mass)));
             
             return list;
         }

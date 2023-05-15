@@ -1,7 +1,4 @@
-﻿using Dane;
-using System.ComponentModel;
-
-namespace Logika
+﻿namespace Logika
 {
 
     public delegate void LogicBallChangedEventHandler(ILogicBall sender);

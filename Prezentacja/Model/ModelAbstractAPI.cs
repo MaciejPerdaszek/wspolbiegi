@@ -21,7 +21,7 @@ namespace Prezentacja.Model
             return new Model();
         }
 
-        public abstract List<IViewBall> CreateBalls(int amount, double radius, double mass);
+        public abstract List<IViewBall> CreateBalls(int amount, double diameter, double mass);
 
         public abstract void CreateTable(int width, int height);
 

@@ -1,5 +1,4 @@
 ﻿using Dane;
-using System.Diagnostics;
 
 namespace Logika
 {
@@ -69,36 +68,47 @@ namespace Logika
             throw new NotImplementedException();
         }
 
-        public void Collide(LogicBall other)
+        public void Collide(ILogicBall other)
         {
             double dx = other.X - X;
             double dy = other.Y - Y;
             double distance = Math.Sqrt(dx * dx + dy * dy);
 
-            if (distance <= 15)
+            if (distance <= Diameter)
             {
-                lock (LogicModel.collisionLock)
-                {
-                    double nx = dx / distance;
-                    double ny = dy / distance;
+                if(((speedX - other.speedX) * (X - other.X)) + ((speedY - other.speedY) * (Y - other.Y)) >= 0)
+                { 
+                    lock (LogicModel.collisionLock)
+                    {
+                        double nx = dx / distance;
+                        double ny = dy / distance;
 
-                    double dvx = other.speedX - speedX;
-                    double dvy = other.speedY - speedY;
+                        double dvx = other.speedX - speedX;
+                        double dvy = other.speedY - speedY;
 
-                    double prod = dvx * nx + dvy * ny;
+                        double prod = dvx * nx + dvy * ny;
 
                         double impulse = 2 * Mass * other.Mass * prod / ((Mass + other.Mass) * distance);
 
-                        speedX += impulse * nx / Mass;
-                        speedY += impulse * ny / Mass;
-                        other.speedX += impulse * nx / other.Mass;
-                        other.speedY += impulse * ny / other.Mass;
+                        double changeX = impulse * nx / Mass;
+                        double changeY = impulse * ny / Mass;
 
-                        directionX = directionX * -1;
-                        directionY = directionY * -1;
-                        other.directionX = other.directionX * -1;
-                        other.directionY = other.directionY * -1;
-                    
+                        speedX += changeX;
+                        speedY += changeY;
+                        other.speedX += changeX;
+                        other.speedY += changeY;
+
+                        if(directionX != other.directionX)
+                        {
+                            other.directionX *= -1;
+                            directionX *= -1;
+                        }
+                        if (directionY != other.directionY)
+                        {
+                            directionY *= -1;
+                            other.directionY *= -1;
+                        }
+                    }
                 }
             }
         }

@@ -1,6 +1,4 @@
 ﻿using Dane;
-using System.Diagnostics;
-using System.Xml.Serialization;
 
 namespace Logika
 {
@@ -78,18 +76,12 @@ namespace Logika
                 ball.directionY = 1;
 
 
-            for (int i = 0; i < _balls.Count; i++)
+            foreach (ILogicBall other in _balls)
             {
-
-                LogicBall other = (LogicBall)_balls[i];
-
                 if (ball == other)
                     continue;
-
                 
                     ball.Collide(other);
-                
-
             }
         }    
     
