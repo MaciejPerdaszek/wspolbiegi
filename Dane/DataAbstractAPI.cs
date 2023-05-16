@@ -1,8 +1,8 @@
 ﻿namespace Dane
 {
 
-    public delegate void DataBallChangedEventHandler(IBall sender);
-    public interface IBall : IDisposable
+    public delegate void DataBallChangedEventHandler(ILogicBall sender);
+    public interface ILogicBall : IDisposable
     {
 
         double X { get; internal set; }
@@ -37,7 +37,7 @@
             return new DataModel();   
         }
 
-        public abstract IBall CreateBall(double x, double y);
+        public abstract ILogicBall CreateBall(double x, double y);
 
     }
 }

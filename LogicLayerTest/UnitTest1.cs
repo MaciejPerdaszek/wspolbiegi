@@ -1,21 +1,51 @@
-/*using Dane;
+using Dane;
 using Logika;
 using Moq;
-using System.ComponentModel;
+using NUnit.Framework;
 
-[TestFixture]
-public class LogicAbstractAPITests
+namespace Logika.Tests
 {
-    [Test]
-    public void TestCreateBalls()
+    [TestFixture]
+    public class LogicAbstractAPITests
     {
-        var api = new Mock<LogicAbstractAPI>() { CallBase = true }; ;
-        api.Setup(x => x.CreateBalls(It.IsAny<int>(), It.IsAny<double>()))
-               .Returns(new List<ILogicBall> { new Mock<ILogicBall>().Object, new Mock<ILogicBall>().Object });
+        [Test]
+        public void CreateLogicBall()
+        {
+            double diameter = 10.0;
+            double mass = 5.0;
 
-        var result = api.Object.CreateBalls(2, 10);
+            var logicBallMock = new Mock<TestLogicBall>();
 
-        Assert.That(result.Count, Is.EqualTo(2));
+            logicBallMock.Object.Diameter = diameter;
+            logicBallMock.Object.Mass = mass;
+
+            var logicAbstractApiMock = new Mock<LogicAbstractAPI>();
+            logicAbstractApiMock.Setup(api => api.CreateBall(diameter, mass)).Returns(logicBallMock.Object);
+
+            var obj = logicAbstractApiMock.Object;
+            var result = obj.CreateBall(diameter, mass);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Diameter, Is.EqualTo(diameter));
+            Assert.That(result.Mass, Is.EqualTo(mass));
+        }
     }
 }
-*/
+public class TestLogicBall : Logika.ILogicBall, IDisposable
+{
+    public double X { get; set; }
+    public double Y { get; set; }
+    public double speedX { get; set; }
+    public double speedY { get; set; }
+    public int directionX { get; set; }
+    public int directionY { get; set; }
+    public double Mass { get; set; }
+    public double Diameter { get; set; }
+
+    public event LogicBallChangedEventHandler LogicBallChanged;
+
+    public void Dispose()
+    {
+        throw new NotImplementedException();
+    }
+}

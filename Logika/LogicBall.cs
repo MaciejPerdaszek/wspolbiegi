@@ -6,7 +6,7 @@ namespace Logika
     {
         private double _diameter;
         private double _mass;
-        private IBall _dataBall;
+        private Dane.ILogicBall _dataBall;
         private LogicBallChangedEventHandler? _ballChangedEventHandler;
 
         public double X
@@ -28,7 +28,7 @@ namespace Logika
         public int directionY { get => _dataBall.directionY; set => _dataBall.directionY = value; }
 
 
-        public LogicBall(IBall dataBall, double diameter, double mass)
+        public LogicBall(Dane.ILogicBall dataBall, double diameter, double mass)
         {
             _diameter = diameter;
             _mass = mass;
@@ -36,7 +36,7 @@ namespace Logika
             dataBall.DataBallChanged += DataBall_DataBallChanged;
         }
 
-        private void DataBall_DataBallChanged(IBall sender)
+        private void DataBall_DataBallChanged(Dane.ILogicBall sender)
         {
             OnBallChangedEvent();
         }

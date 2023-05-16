@@ -1,6 +1,6 @@
 ﻿namespace Dane
 {
-    internal class Ball : IBall
+    internal class Ball : ILogicBall
     {
         private double _x;
         private double _y;
