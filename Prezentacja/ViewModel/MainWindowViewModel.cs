@@ -49,8 +49,8 @@ namespace Prezentacja.ViewModel
             {
                 var ellipse = new Ellipse
                 {
-                    Width = b.Diameter,
-                    Height = b.Diameter,
+                    Width = b.Diameter-5,
+                    Height = b.Diameter-5,
                     Fill = System.Windows.Media.Brushes.Black,
                     Stroke = System.Windows.Media.Brushes.Red,
                 };

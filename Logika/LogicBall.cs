@@ -67,7 +67,6 @@ namespace Logika
         {
             throw new NotImplementedException();
         }
-
         public void Collide(ILogicBall other)
         {
             double dx = other.X - X;
@@ -76,8 +75,6 @@ namespace Logika
 
             if (distance <= Diameter)
             {
-                if(((speedX - other.speedX) * (X - other.X)) + ((speedY - other.speedY) * (Y - other.Y)) >= 0)
-                { 
                     lock (LogicModel.collisionLock)
                     {
                         double nx = dx / distance;
@@ -95,20 +92,30 @@ namespace Logika
 
                         speedX += changeX;
                         speedY += changeY;
-                        other.speedX += changeX;
-                        other.speedY += changeY;
+                        other.speedX -= changeX;
+                        other.speedY -= changeY;
 
-                        if(directionX != other.directionX)
-                        {
-                            other.directionX *= -1;
-                            directionX *= -1;
-                        }
-                        if (directionY != other.directionY)
-                        {
-                            directionY *= -1;
-                            other.directionY *= -1;
-                        }
-                    }
+                       
+                         if (directionX != other.directionX)
+                         {
+                             directionX *= -1;
+                             other.directionX *= -1;
+                         }
+                         if (directionY != other.directionY)
+                         {
+                             directionY *= -1;
+                             other.directionY *= -1;
+                         }
+
+                        // omijanie nakladania sie kuli
+                        double overlap = 0.8 * (distance - Diameter);
+                        double avoidX = overlap * nx;
+                        double avoidY = overlap * ny;
+
+                        speedX -= avoidX / Mass;
+                        speedY -= avoidY / Mass;
+                        other.speedX += avoidX / other.Mass;
+                        other.speedY += avoidY / other.Mass;
                 }
             }
         }
