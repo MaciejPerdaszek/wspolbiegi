@@ -25,6 +25,8 @@ namespace Prezentacja.Model
 
         public abstract void CreateTable(int width, int height);
 
+        public abstract void SaveRecord();
+
         public abstract void Dispose();
 
     }

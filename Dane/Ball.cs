@@ -1,7 +1,13 @@
-﻿namespace Dane
+﻿using System.Reactive;
+using System.Xml;
+using System.Xml.Serialization;
+
+namespace Dane
 {
-    internal class Ball : ILogicBall
+    internal class Ball : IDataBall
     {
+        private readonly int _id;
+
         private double _x;
         private double _y;
 
@@ -11,20 +17,24 @@
         private int _directionX;
         private int _directionY;
 
-        public Ball(double x, double y)
+        public Ball(double x, double y, int id)
         {
-            this._x = x;
-            this._y = y;
+            _x = x;
+            _y = y;
+            _id = id;
+
+
             Random random = new Random();
             _speedX = random.NextDouble() * 200;
             _speedY = random.NextDouble() * 200;
             _directionX = random.Next(2) * 2 - 1;
             _directionY = random.Next(2) * 2 - 1;
+
             Move();
         }
    
 
-        public double X
+        internal double X
         {
             get
             {
@@ -37,7 +47,7 @@
             }
         }
 
-        public double Y
+        internal double Y
         {
             get
             {
@@ -46,7 +56,16 @@
             set
             {
                 _y = value;
+                
                 OnBallChangedEvent();
+            }
+        }
+
+        internal int Id
+        {
+            get
+            {
+                return _id;
             }
         }
 
@@ -103,14 +122,12 @@
                     Thread.Sleep(TimeSpan.FromMilliseconds(speedY * 0.5));
                 }
             });
-
-
-
         }
 
         private void OnBallChangedEvent()
         {
-            DataBallChanged?.Invoke(this);
+            DataModel.addRecord(this);
+            DataBallChanged?.Invoke(this, X, Y);
         }
     }
 }

@@ -1,22 +1,26 @@
-﻿using Dane;
-
+﻿
 namespace Logika
 {
     internal class LogicBall : ILogicBall
     {
         private double _diameter;
         private double _mass;
-        private Dane.ILogicBall _dataBall;
+        private Dane.IDataBall _dataBall;
         private LogicBallChangedEventHandler? _ballChangedEventHandler;
+
+        private double _x;
+        private double _y;
 
         public double X
         {
-            get { return _dataBall.X; }
+            get { return _x; }
+            set { _x = value; }
         }
 
         public double Y
         {
-            get { return _dataBall.Y; }
+            get { return _y; }
+            set { _y = value; }
         }
 
         public double Diameter { get => _diameter; set => _diameter = value; }
@@ -28,7 +32,7 @@ namespace Logika
         public int directionY { get => _dataBall.directionY; set => _dataBall.directionY = value; }
 
 
-        public LogicBall(Dane.ILogicBall dataBall, double diameter, double mass)
+        public LogicBall(Dane.IDataBall dataBall, double diameter, double mass)
         {
             _diameter = diameter;
             _mass = mass;
@@ -36,8 +40,10 @@ namespace Logika
             dataBall.DataBallChanged += DataBall_DataBallChanged;
         }
 
-        private void DataBall_DataBallChanged(Dane.ILogicBall sender)
+        private void DataBall_DataBallChanged(Dane.IDataBall sender, double x, double y)
         {
+            X = x;
+            Y = y;
             OnBallChangedEvent();
         }
 
@@ -75,8 +81,6 @@ namespace Logika
 
             if (distance <= Diameter)
             {
-                    lock (LogicModel.collisionLock)
-                    {
                         double nx = dx / distance;
                         double ny = dy / distance;
 
@@ -107,7 +111,6 @@ namespace Logika
                              other.directionY *= -1;
                          }
 
-                        // omijanie nakladania sie kuli
                         double overlap = 0.8 * (distance - Diameter);
                         double avoidX = overlap * nx;
                         double avoidY = overlap * ny;
@@ -116,7 +119,6 @@ namespace Logika
                         speedY -= avoidY / Mass;
                         other.speedX += avoidX / other.Mass;
                         other.speedY += avoidY / other.Mass;
-                }
             }
         }
     }

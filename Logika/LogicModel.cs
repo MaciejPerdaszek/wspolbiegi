@@ -75,19 +75,26 @@ namespace Logika
             else if (ball.Y < 0)
                 ball.directionY = 1;
 
-
             foreach (ILogicBall other in _balls)
             {
-                if (ball == other)
-                    continue;
+                lock (collisionLock)
+                {
+                    if (ball == other)
+                        continue;
                 
                     ball.Collide(other);
+                }
             }
         }    
     
         public override void Dispose()
         {
             throw new NotImplementedException();
+        }
+
+        public override void SaveRecord()
+        {
+            DataApi.SaveRecord();
         }
     }
 }

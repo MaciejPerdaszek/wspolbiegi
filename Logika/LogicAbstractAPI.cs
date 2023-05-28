@@ -4,8 +4,8 @@
     public delegate void LogicBallChangedEventHandler(ILogicBall sender);
     public interface ILogicBall : IDisposable
     {
-        double X { get; }
-        double Y { get; }
+        double X { get; internal set; }
+        double Y { get; internal set; }
         double speedX { get; internal set; }
         double speedY { get; internal set; }
         int directionX { get; internal set; }
@@ -27,6 +27,8 @@
         public abstract ILogicBall CreateBall(double diameter, double mass);
 
         public abstract void CreateTable(int width, int height);
+
+        public abstract void SaveRecord();
 
         public abstract void Dispose();
     }
