@@ -1,4 +1,3 @@
-using Dane;
 using Logika;
 using Moq;
 using NUnit.Framework;
@@ -6,7 +5,7 @@ using NUnit.Framework;
 namespace Logika.Tests
 {
     [TestFixture]
-    public class LogicAbstractAPITests
+    internal class LogicAbstractAPITests
     {
         [Test]
         public void CreateLogicBall()
@@ -28,6 +27,33 @@ namespace Logika.Tests
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Diameter, Is.EqualTo(diameter));
             Assert.That(result.Mass, Is.EqualTo(mass));
+        }
+
+        [Test]
+        public void CreateTable()
+        {
+            int width = 100;
+            int height = 200;
+
+            var logicAbstractApiMock = new Mock<LogicAbstractAPI>();
+
+            logicAbstractApiMock.Setup(api => api.CreateTable(width, height)).Verifiable();
+
+            var obj = logicAbstractApiMock.Object;
+            obj.CreateTable(width, height);
+
+            logicAbstractApiMock.Verify(api => api.CreateTable(width, height), Times.Once);
+        }
+
+        [Test]
+        public void CreateBallWithNoInitiazeTable()
+        {
+            double diameter = 10.0;
+            double mass = 5.0;
+
+            var logicModel = new LogicModel();
+
+            Assert.Throws<Exception>(() => logicModel.CreateBall(diameter, mass));
         }
     }
 }
