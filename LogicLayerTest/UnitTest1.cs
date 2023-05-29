@@ -31,7 +31,7 @@ namespace Logika.Tests
         }
     }
 }
-public class TestLogicBall : Logika.ILogicBall, IDisposable
+public class TestLogicBall : ILogicBall, IDisposable
 {
     public double X { get; set; }
     public double Y { get; set; }

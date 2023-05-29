@@ -1,6 +1,6 @@
-using Dane;
 using Moq;
 using NUnit.Framework;
+using Dane;
 
 namespace Dane.Tests
 {
@@ -12,10 +12,15 @@ namespace Dane.Tests
         {
             double x = 1.0;
             double y = 2.0;
-            var ballMock = new Mock<TestDataBall>();
+            var ballMock = new Mock<IDataBall>();
 
-            ballMock.Object.X = x;
-            ballMock.Object.Y = y;
+            ballMock.SetupProperty(b => b.speedX, 0.0);
+            ballMock.SetupProperty(b => b.speedY, 0.0);
+            ballMock.SetupProperty(b => b.directionX, 0);
+            ballMock.SetupProperty(b => b.directionY, 0);
+
+            ballMock.Object.speedX = x;
+            ballMock.Object.speedY = y;
 
             var dataAbstractApiMock = new Mock<DataAbstractAPI>();
             dataAbstractApiMock.Setup(api => api.CreateBall(x, y)).Returns(ballMock.Object);
@@ -23,22 +28,8 @@ namespace Dane.Tests
             var result = obj.CreateBall(x, y);
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.X, Is.EqualTo(x));
-            Assert.That(result.Y, Is.EqualTo(y));
+            Assert.That(result.speedX, Is.EqualTo(x));
+            Assert.That(result.speedY, Is.EqualTo(y));
         }
-    }
-}
-public class TestDataBall : ILogicBall, IDisposable
-{
-    public double X { get; set; }
-    public double Y { get; set; }
-    public double speedX { get; set; }
-    public double speedY { get ; set; }
-    public int directionX { get ; set; }
-    public int directionY { get ; set; }
-
-    public void Dispose()
-    {
-        throw new NotImplementedException();
     }
 }
