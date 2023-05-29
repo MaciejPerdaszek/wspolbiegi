@@ -30,11 +30,6 @@ namespace Prezentacja.Model
         {
             LogicApi.CreateTable(width, height);
         }
-
-        public override void SaveRecord()
-        {
-            LogicApi.SaveRecord();
-        }
     }
 }
 

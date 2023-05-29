@@ -1,8 +1,4 @@
-﻿using System.Reactive;
-using System.Xml;
-using System.Xml.Serialization;
-
-namespace Dane
+﻿namespace Dane
 {
     internal class Ball : IDataBall
     {
@@ -61,7 +57,7 @@ namespace Dane
             }
         }
 
-        internal int Id
+        public int Id
         {
             get
             {
@@ -126,7 +122,6 @@ namespace Dane
 
         private void OnBallChangedEvent()
         {
-            DataModel.addRecord(this);
             DataBallChanged?.Invoke(this, X, Y);
         }
     }

@@ -10,6 +10,8 @@
         int directionX { get; set; }
         int directionY { get; set; }
 
+        int Id { get; }
+
         public event DataBallChangedEventHandler DataBallChanged
         {
             add
@@ -30,9 +32,6 @@
         {
             return new DataModel();   
         }
-
-        public abstract void SaveRecord();
-
         public abstract IDataBall CreateBall(double x, double y);
 
     }

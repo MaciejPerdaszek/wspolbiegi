@@ -9,14 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logika", "Logika\Logika.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prezentacja", "Prezentacja\Prezentacja.csproj", "{412F8EA5-5599-4E1F-8DD9-18DC76F5D230}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementy rozwiązania", "Elementy rozwiązania", "{DAABD77A-D63E-4726-B7F7-BBA7EBC085F3}"
-	ProjectSection(SolutionItems) = preProject
-		Prezentacja\ViewModel\MainWindowViewModel.cs = Prezentacja\ViewModel\MainWindowViewModel.cs
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayerTest", "DataLayerTest\DataLayerTest.csproj", "{A858DBBB-BB2C-45FC-95B7-C750D21818DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayerTest", "DataLayerTest\DataLayerTest.csproj", "{A858DBBB-BB2C-45FC-95B7-C750D21818DB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicLayerTest", "LogicLayerTest\LogicLayerTest.csproj", "{1D1CA771-2B6E-40EC-B936-C8143DB29857}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicLayerTest", "LogicLayerTest\LogicLayerTest.csproj", "{1D1CA771-2B6E-40EC-B936-C8143DB29857}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

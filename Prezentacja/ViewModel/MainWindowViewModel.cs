@@ -17,7 +17,6 @@ namespace Prezentacja.ViewModel
         {
             ModelApi = ModelAbstractAPI.CreateApi();
             CreateBallsCommand = new Commands(CreateBallsOnBoard);
-            SaveRecordCommand = new Commands(SaveRecord);
         }
 
         public void Dispose()
@@ -34,8 +33,6 @@ namespace Prezentacja.ViewModel
 
         public ICommand CreateBallsCommand { get; set; }
 
-        public ICommand SaveRecordCommand { get; set; }
-
         public string Amount
         {
             get => Convert.ToString(amountOfBalls);
@@ -43,11 +40,6 @@ namespace Prezentacja.ViewModel
             {
                 amountOfBalls = Convert.ToInt32(value);
             }
-        }
-
-        private void SaveRecord(object obj)
-        {
-            ModelApi.SaveRecord();
         }
 
         private void CreateBallsOnBoard(object obj)

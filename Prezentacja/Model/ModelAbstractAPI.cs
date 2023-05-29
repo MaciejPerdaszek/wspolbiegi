@@ -24,9 +24,6 @@ namespace Prezentacja.Model
         public abstract List<IViewBall> CreateBalls(int amount, double diameter, double mass);
 
         public abstract void CreateTable(int width, int height);
-
-        public abstract void SaveRecord();
-
         public abstract void Dispose();
 
     }

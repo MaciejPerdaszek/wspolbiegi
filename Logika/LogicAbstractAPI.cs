@@ -27,9 +27,6 @@
         public abstract ILogicBall CreateBall(double diameter, double mass);
 
         public abstract void CreateTable(int width, int height);
-
-        public abstract void SaveRecord();
-
         public abstract void Dispose();
     }
 }

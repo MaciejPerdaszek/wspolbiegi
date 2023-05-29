@@ -91,10 +91,5 @@ namespace Logika
         {
             throw new NotImplementedException();
         }
-
-        public override void SaveRecord()
-        {
-            DataApi.SaveRecord();
-        }
     }
 }

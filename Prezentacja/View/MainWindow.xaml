@@ -13,7 +13,6 @@
             <Label Content="Amount of balls:" VerticalAlignment="Center"/>
             <TextBox Text="{Binding Amount, Mode=TwoWay}" Width="50" Margin="5"/>
             <Button Content="Create balls" Command="{Binding CreateBallsCommand}" Margin="5"/>
-            <Button Content="Save Record" Command="{Binding SaveRecordCommand}" Margin="5"/>
         </StackPanel>
 
         <Canvas Grid.Row="1" Width ="500" Height="300" Background="Green" Margin="10" DataContext="{Binding}">

@@ -1,83 +1,60 @@
-﻿using System.Xml.Serialization;
+﻿using System.Diagnostics;
+using System.Xml.Serialization;
 
 namespace Dane
 {
 
     internal class DataModel : DataAbstractAPI
     {
-        [XmlArray]
-        public static List<BallRecord> Records { get; set; } = new List<BallRecord>();
-
-        [XmlArray]
-        public static List<BallRecord> AllRecords { get; set; } = new List<BallRecord>();
-
-        public static object diagnosticFileLock = new();
-        public static String diagnosticFileName = "ball-data-"+DateTime.Now.Ticks+".xml";
-
         private static int ballNumber = 0;
-
-        private static bool record = false;
-        
-
-        public static void addRecord(Ball ball)
-        {
-            lock (diagnosticFileLock)
-            {
-                BallRecord br = Records.Find(r => r.Id == ball.Id);
-            if(br == null && record)
-            {
-                BallRecord record = new(DateTime.Now, ball.Id, ball.X, ball.Y, ball.speedX, ball.speedY, ball.directionX, ball.directionY);
-                Records.Add(record);
-                    
-                }
-                if (Records.Count() == ballNumber)
-                {
-                    AllRecords.AddRange(Records);
-
-                    XmlSerializer xmlSerializer = new(AllRecords.GetType());
-
-                    using (StreamWriter streamWriter = File.CreateText(diagnosticFileName))
-                    {
-                        xmlSerializer.Serialize(streamWriter, AllRecords);
-                        record = false;
-                        Records.Clear();
-                    }
-                }
-            }
-        }
-
-        public override void SaveRecord()
-        {
-           
-            Records.Clear();
-            record = true;
-        }
-
-        public DataModel() {
-
-        }
-
         public override IDataBall CreateBall(double x, double y)
         {
             ballNumber++;
             
             Ball newBall = new(x,y, ballNumber);
+            newBall.DataBallChanged += NewBall_DataBallChanged;
 
             return newBall;
+        }
+        private void NewBall_DataBallChanged(IDataBall sender, double x, double y)
+        {
+            lock (diagnosticFileLock)
+            {
+                addRecord(sender.Id, x, y, DateTime.Now);
+            }
+        }
+
+        [XmlArray]
+        public static List<BallRecord> Records { get; set; } = new List<BallRecord>();
+
+        public static object diagnosticFileLock = new();
+        public static String diagnosticFileName = "ball-data-"+DateTime.Now.Ticks+".xml";
+        private void addRecord(int id, double x, double y, DateTime timestamp)
+        {
+            BallRecord record = new(id, x, y, timestamp);
+            Records.Add(record);
+            XmlSerializer xmlSerializer = new(Records.GetType());
+            try
+            {
+                using (StreamWriter streamWriter = File.CreateText(diagnosticFileName))
+                {
+                    xmlSerializer.Serialize(streamWriter, Records);
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                Debug.WriteLine("File error: " + ex.Message);
+            }
         }
     }
     public class BallRecord
     {
-        public BallRecord(DateTime timestamp, int id, double x, double y, double speedX, double speedY, int directionX, int directionY)
+        public BallRecord(int id, double x, double y, DateTime timestamp)
         {
             Timestamp = timestamp;
             Id = id;
             X = x;
             Y = y;
-            this.directionX = directionX;
-            this.directionY = directionY;
-            this.speedX = speedX;
-            this.speedY = speedY;
         }
 
         public BallRecord() { }
@@ -87,9 +64,5 @@ namespace Dane
         public int Id { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
-        public double speedX { get; set; }
-        public double speedY { get; set; }
-        public int directionX { get; set; }
-        public int directionY { get; set; }
     }
 }
