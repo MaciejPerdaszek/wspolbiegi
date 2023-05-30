@@ -5,7 +5,7 @@ using Dane;
 namespace Dane.Tests
 {
     [TestFixture]
-    public class DataAbstractAPITests
+    internal class DataAbstractAPITests
     {
         [Test]
         public void CreateDataBall()

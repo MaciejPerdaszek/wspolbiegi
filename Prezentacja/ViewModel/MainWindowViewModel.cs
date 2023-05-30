@@ -13,6 +13,8 @@ namespace Prezentacja.ViewModel
 
         private int amountOfBalls;
 
+        private int diameter = 30;
+
         public MainWindowViewModel()
         {
             ModelApi = ModelAbstractAPI.CreateApi();
@@ -23,7 +25,6 @@ namespace Prezentacja.ViewModel
         {
             ModelApi.Dispose();
         }
-
 
         public Canvas MyCanvas { get; } = new Canvas();
 
@@ -41,11 +42,11 @@ namespace Prezentacja.ViewModel
                 amountOfBalls = Convert.ToInt32(value);
             }
         }
-
+        
         private void CreateBallsOnBoard(object obj)
         {
-            ModelApi.CreateTable(500, 300);
-            foreach (IViewBall b in ModelApi.CreateBalls(amountOfBalls, 30, 1))
+            ModelApi.CreateTable(500 - diameter, 300 - diameter);
+            foreach (IViewBall b in ModelApi.CreateBalls(amountOfBalls, diameter, 1))
             {
                 var ellipse = new Ellipse
                 {

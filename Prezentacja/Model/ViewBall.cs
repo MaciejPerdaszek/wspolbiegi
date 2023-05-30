@@ -37,7 +37,6 @@ namespace Prezentacja.Model
             }
         }
 
-
         public double Diameter { get => _diameter; set => _diameter = value; }
 
         public int id { get => _id; set => _id = value; }
