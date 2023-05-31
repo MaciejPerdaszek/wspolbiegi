@@ -1,7 +1,9 @@
-﻿namespace Dane
+﻿using System.Numerics;
+
+namespace Dane
 {
 
-    public delegate void DataBallChangedEventHandler(IDataBall sender, double x, double y);
+    public delegate void DataBallChangedEventHandler(IDataBall sender, Vector2 vector);
     public interface IDataBall : IDisposable
     {
         double speedX { get; set; }
@@ -32,7 +34,7 @@
         {
             return new DataModel();   
         }
-        public abstract IDataBall CreateBall(double x, double y);
+        public abstract IDataBall CreateBall(float x, float y);
 
     }
 }

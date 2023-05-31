@@ -49,13 +49,13 @@ namespace Logika
         {
             if (width != 0 && height != 0)
                {
-                Random r = new();
-                    double x = r.NextDouble() * 500;
-                    double y = r.NextDouble() * 300;
-                    ILogicBall ball = new LogicBall(DataApi.CreateBall(x, y), diameter, mass);
+                    Random r = new();
+                    double x = diameter + r.NextDouble() * (_width - diameter);
+                    double y = diameter + r.NextDouble() * (_height - diameter);
+                    ILogicBall ball = new LogicBall(DataApi.CreateBall((float) x, (float) y), diameter, mass);
                     ball.LogicBallChanged += Ball_LogicBallChanged;
                     _balls.Add(ball);
-                return ball;
+                    return ball;
                }
             throw new Exception("Table not initialized");
         }
@@ -63,17 +63,17 @@ namespace Logika
         private void Ball_LogicBallChanged(ILogicBall b)
         {
 
-            LogicBall ball = (LogicBall)b;
+            LogicBall ball = (LogicBall) b;
 
             if (ball.X > width)
-                ball.directionX = -1;
+                ball.speedX = -Math.Abs(ball.speedX);
             else if (ball.X < 0)
-                ball.directionX = 1;
+                ball.speedX = Math.Abs(ball.speedX);
 
             if (ball.Y > height)
-                ball.directionY = -1;
+                ball.speedY = -Math.Abs(ball.speedY);
             else if (ball.Y < 0)
-                ball.directionY = 1;
+                ball.speedY = Math.Abs(ball.speedY);
 
             foreach (ILogicBall other in _balls)
             {

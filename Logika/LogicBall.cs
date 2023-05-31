@@ -1,4 +1,6 @@
 ﻿
+using System.Numerics;
+
 namespace Logika
 {
     internal class LogicBall : ILogicBall
@@ -40,10 +42,10 @@ namespace Logika
             dataBall.DataBallChanged += DataBall_DataBallChanged;
         }
 
-        private void DataBall_DataBallChanged(Dane.IDataBall sender, double x, double y)
+        private void DataBall_DataBallChanged(Dane.IDataBall sender, Vector2 vector)
         {
-            X = x;
-            Y = y;
+            X = vector.X;
+            Y = vector.Y;
             OnBallChangedEvent();
         }
 
@@ -79,46 +81,18 @@ namespace Logika
             double dy = other.Y - Y;
             double distance = Math.Sqrt(dx * dx + dy * dy);
 
-            if (distance <= Diameter)
+            if (distance <= Diameter && ((speedX - other.speedX) * (other.X - X) + (speedY - other.speedY) * (other.Y - Y) >= 0))
             {
-                        double nx = dx / distance;
-                        double ny = dy / distance;
+                double v1x = (speedX * (Mass - other.Mass) + 2 * other.Mass * other.speedX)/(Mass + other.Mass);
+                double v1y = (speedY * (Mass - other.Mass) + 2 * other.Mass * other.speedY) / (Mass + other.Mass);
 
-                        double dvx = other.speedX - speedX;
-                        double dvy = other.speedY - speedY;
+                double v2x = (other.speedX * (other.Mass - Mass) + 2 * Mass * speedX) / (Mass + other.Mass);
+                double v2y = (other.speedY * (other.Mass - Mass) + 2 * Mass * speedY) / (Mass + other.Mass);
 
-                        double prod = dvx * nx + dvy * ny;
-
-                        double impulse = 2 * Mass * other.Mass * prod / ((Mass + other.Mass) * distance);
-
-                        double changeX = impulse * nx / Mass;
-                        double changeY = impulse * ny / Mass;
-
-                        speedX += changeX;
-                        speedY += changeY;
-                        other.speedX -= changeX;
-                        other.speedY -= changeY;
-
-                       
-                         if (directionX != other.directionX)
-                         {
-                             directionX *= -1;
-                             other.directionX *= -1;
-                         }
-                         if (directionY != other.directionY)
-                         {
-                             directionY *= -1;
-                             other.directionY *= -1;
-                         }
-
-                        double overlap = 0.8 * (distance - Diameter);
-                        double avoidX = overlap * nx;
-                        double avoidY = overlap * ny;
-
-                        speedX -= avoidX / Mass;
-                        speedY -= avoidY / Mass;
-                        other.speedX += avoidX / other.Mass;
-                        other.speedY += avoidY / other.Mass;
+                speedX = v1x;
+                speedY = v1y;
+                other.speedX = v2x;
+                other.speedY = v2y;
             }
         }
     }

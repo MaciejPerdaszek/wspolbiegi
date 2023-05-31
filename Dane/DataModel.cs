@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Concurrent;
+using System.Numerics;
 using System.Xml.Serialization;
 
 namespace Dane
@@ -7,54 +8,62 @@ namespace Dane
     internal class DataModel : DataAbstractAPI
     {
         private static int ballNumber = 0;
-        public override IDataBall CreateBall(double x, double y)
+        public override IDataBall CreateBall(float x, float y)
         {
             ballNumber++;
-            
-            Ball newBall = new(x,y, ballNumber);
+
+            Ball newBall = new(x, y, ballNumber);
             newBall.DataBallChanged += NewBall_DataBallChanged;
 
             return newBall;
         }
-        private void NewBall_DataBallChanged(IDataBall sender, double x, double y)
+
+        public static object diagnosticFileLock = new();
+        private void NewBall_DataBallChanged(IDataBall sender, Vector2 vector)
         {
             lock (diagnosticFileLock)
             {
-                addRecord(sender.Id, x, y, DateTime.Now);
+                recordQueue.Enqueue(new BallRecord(sender.Id, vector, DateTime.Now));
             }
         }
 
-        [XmlArray]
-        public static List<BallRecord> Records { get; set; } = new List<BallRecord>();
-
-        public static object diagnosticFileLock = new();
-        public static String diagnosticFileName = "ball-data-"+DateTime.Now.Ticks+".xml";
-        private void addRecord(int id, double x, double y, DateTime timestamp)
+        public DataModel()
         {
-            BallRecord record = new(id, x, y, timestamp);
-            Records.Add(record);
-            XmlSerializer xmlSerializer = new(Records.GetType());
-            try
-            {
-                using (StreamWriter streamWriter = File.CreateText(diagnosticFileName))
-                {
-                    xmlSerializer.Serialize(streamWriter, Records);
+            BallRecordReader.Run();
+        }
+
+        public static ConcurrentQueue<BallRecord> recordQueue = new();
+    }
+
+    internal class BallRecordReader 
+    {
+        static String diagnosticFileName = "ball-data-" + DateTime.Now.Ticks + ".xml";
+        static List<BallRecord> records = new();
+        static XmlSerializer xmlSerializer = new(typeof(List<BallRecord>));
+        static public async Task Run()
+        {
+            await Task.Run(() => {
+                while (true) {
+                    if (DataModel.recordQueue.TryDequeue(out BallRecord record))
+                    {
+                        using(StreamWriter streamWriter = File.CreateText(diagnosticFileName)) { 
+                            records.Add(record);
+                            xmlSerializer.Serialize(streamWriter, records);
+                        }
+                    }
                 }
-            }
-            catch (FileNotFoundException ex)
-            {
-                Debug.WriteLine("File error: " + ex.Message);
-            }
+            });
         }
     }
+
     public class BallRecord
     {
-        public BallRecord(int id, double x, double y, DateTime timestamp)
+        public BallRecord(int id, Vector2 vector, DateTime timestamp)
         {
             Timestamp = timestamp;
             Id = id;
-            X = x;
-            Y = y;
+            X = vector.X;
+            Y = vector.Y;
         }
 
         public BallRecord() { }
@@ -62,7 +71,7 @@ namespace Dane
         public DateTime Timestamp { get; set; }
 
         public int Id { get; set; }
-        public double X { get; set; }
-        public double Y { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
     }
 }

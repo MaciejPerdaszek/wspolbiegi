@@ -1,11 +1,13 @@
-﻿namespace Dane
+﻿using System.Numerics;
+
+namespace Dane
 {
     internal class Ball : IDataBall
     {
         private readonly int _id;
 
-        private double _x;
-        private double _y;
+        //private double _x;
+        //private double _y;
 
         private double _speedX;
         private double _speedY;
@@ -13,46 +15,49 @@
         private int _directionX;
         private int _directionY;
 
-        public Ball(double x, double y, int id)
+        private Vector2 _vector;
+
+        public Ball(float x, float y, int id)
         {
-            _x = x;
-            _y = y;
+           // _x = x;
+           // _y = y;
             _id = id;
 
 
             Random random = new Random();
-            _speedX = random.NextDouble() * 200;
-            _speedY = random.NextDouble() * 200;
+            _speedX = random.Next(2) * 10 - 5; ;
+            _speedY = random.Next(2) * 10 - 5; ;
             _directionX = random.Next(2) * 2 - 1;
             _directionY = random.Next(2) * 2 - 1;
 
+            _vector = new Vector2(x, y);
+            OnBallChangedEvent();
             Move();
         }
    
 
-        internal double X
+        internal float X
         {
             get
             {
-                return _x;
+                return _vector.X;
             }
             set
             {
-                _x = value;
+                _vector.X = value;
                 OnBallChangedEvent();
             }
         }
 
-        internal double Y
+        internal float Y
         {
             get
             {
-                return _y;
+                return _vector.Y;
             }
             set
             {
-                _y = value;
-                
+                _vector.Y = value;
                 OnBallChangedEvent();
             }
         }
@@ -100,14 +105,23 @@
             
         }
 
-        private void Move()
+
+
+        private async Task Move()
         {
-            Task t1 = Task.Run(() =>
+            while(true)
+            {
+                _vector.X += (float) _speedX;
+                _vector.Y += (float) _speedY;
+                OnBallChangedEvent();
+                await Task.Delay(17);
+            }
+            /*Task t1 = Task.Run(() =>
                 {
                     while (true)
                     {
                         X += directionX;
-                        Thread.Sleep(TimeSpan.FromMilliseconds(speedX * 0.5));
+                        Thread.Sleep(TimeSpan.FromMilliseconds(speedX));
                     }
                 });
             Task t2 = Task.Run(() =>
@@ -115,14 +129,14 @@
                 while (true)
                 {
                     Y += directionY;
-                    Thread.Sleep(TimeSpan.FromMilliseconds(speedY * 0.5));
+                    Thread.Sleep(TimeSpan.FromMilliseconds(speedY));
                 }
-            });
+            });*/
         }
 
         private void OnBallChangedEvent()
         {
-            DataBallChanged?.Invoke(this, X, Y);
+            DataBallChanged?.Invoke(this, _vector);
         }
     }
 }
