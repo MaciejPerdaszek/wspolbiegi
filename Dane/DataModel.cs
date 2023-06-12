@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Numerics;
-using System.Xml.Serialization;
+using System.Xml;
 
 namespace Dane
 {
@@ -29,27 +29,51 @@ namespace Dane
 
         public DataModel()
         {
-            BallRecordReader.Run();
+            BallRecordReader ballRecordReader = new();
+            ballRecordReader.Run();
         }
 
         public static ConcurrentQueue<BallRecord> recordQueue = new();
     }
 
-    internal class BallRecordReader 
+    internal class BallRecordReader
     {
-        static String diagnosticFileName = "ball-data-" + DateTime.Now.Ticks + ".xml";
-        static List<BallRecord> records = new();
-        static XmlSerializer xmlSerializer = new(typeof(List<BallRecord>));
-        static public async Task Run()
+        string diagnosticFileName;
+
+        public BallRecordReader()
         {
-            await Task.Run(() => {
-                while (true) {
-                    if (DataModel.recordQueue.TryDequeue(out BallRecord record))
+            diagnosticFileName = "ball-records-" + DateTime.Now.Ticks + ".xml";
+            XmlDocument xmlDoc = new();
+            XmlElement rootElement = xmlDoc.CreateElement("BallRecords");
+            xmlDoc.AppendChild(rootElement);
+            xmlDoc.Save(diagnosticFileName);
+        }
+        public async Task Run()
+        {
+            await Task.Run(() =>
+            {
+                while (true)
+                {
+                    if (DataModel.recordQueue.TryDequeue(out var record))
                     {
-                        using(StreamWriter streamWriter = File.CreateText(diagnosticFileName)) { 
-                            records.Add(record);
-                            xmlSerializer.Serialize(streamWriter, records);
-                        }
+                        XmlDocument xmlDoc = new();
+                        xmlDoc.Load(diagnosticFileName);
+                        XmlElement rootElement = xmlDoc.DocumentElement;
+
+                        XmlElement recordElement = xmlDoc.CreateElement("record");
+                        recordElement.SetAttribute("id", record.Id.ToString());
+                        recordElement.SetAttribute("timestamp", record.Timestamp.Hour.ToString()+":"+record.Timestamp.Minute.ToString()+":"+record.Timestamp.Second.ToString()+":"+record.Timestamp.Millisecond.ToString());
+
+                        XmlElement xElement = xmlDoc.CreateElement("X");
+                        xElement.InnerText = record.X.ToString();
+                        recordElement.AppendChild(xElement);
+
+                        XmlElement yElement = xmlDoc.CreateElement("Y");
+                        yElement.InnerText = record.Y.ToString();
+                        recordElement.AppendChild(yElement);
+
+                        rootElement.AppendChild(recordElement);
+                        xmlDoc.Save(diagnosticFileName);
                     }
                 }
             });

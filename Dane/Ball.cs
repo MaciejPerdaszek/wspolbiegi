@@ -6,9 +6,6 @@ namespace Dane
     {
         private readonly int _id;
 
-        //private double _x;
-        //private double _y;
-
         private double _speedX;
         private double _speedY;
 
@@ -19,10 +16,7 @@ namespace Dane
 
         public Ball(float x, float y, int id)
         {
-           // _x = x;
-           // _y = y;
             _id = id;
-
 
             Random random = new Random();
             _speedX = random.Next(2) * 10 - 5; ;
@@ -104,9 +98,6 @@ namespace Dane
         {
             
         }
-
-
-
         private async Task Move()
         {
             while(true)
@@ -116,22 +107,6 @@ namespace Dane
                 OnBallChangedEvent();
                 await Task.Delay(17);
             }
-            /*Task t1 = Task.Run(() =>
-                {
-                    while (true)
-                    {
-                        X += directionX;
-                        Thread.Sleep(TimeSpan.FromMilliseconds(speedX));
-                    }
-                });
-            Task t2 = Task.Run(() =>
-            {
-                while (true)
-                {
-                    Y += directionY;
-                    Thread.Sleep(TimeSpan.FromMilliseconds(speedY));
-                }
-            });*/
         }
 
         private void OnBallChangedEvent()
