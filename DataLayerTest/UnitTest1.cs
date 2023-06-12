@@ -10,8 +10,8 @@ namespace Dane.Tests
         [Test]
         public void CreateDataBall()
         {
-            double x = 1.0;
-            double y = 2.0;
+            float x = 1;
+            float y = 2;
             var ballMock = new Mock<IDataBall>();
 
             ballMock.SetupProperty(b => b.speedX, 0.0);
